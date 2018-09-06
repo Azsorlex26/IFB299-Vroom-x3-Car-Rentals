@@ -16,9 +16,12 @@
     </section>
     <!--Second section which contains the less important information but is still useful-->
     <div class="sub-cont results">
-        {% if something %}
+        {% if list_of_cars != None %}
         <h3>Results</h3>
         <!--List of search results-->
+        {% if not list_of_cars %}
+        <p>Oops. We couldn't find any cars matching your search</p>
+        {% else %}
         <table>
             <tbody>
                 <tr>
@@ -39,152 +42,29 @@
                     <th>Drive</th>
                     <th>WheelBase</th>
                 </tr>
+                {% for item in list_of_cars %}
                 <tr>
-                    <td>14806</td>
-                    <td>Land Rover</td>
-                    <td>Discovery 3</td>
-                    <td>HSE</td>
-                    <td>2006</td>
-                    <td>83650</td>
-                    <td>Springwood Store</td>
-                    <td>2.7L</td>
-                    <td>Diesel Turbo F/Inj</td>
-                    <td>82L</td>
-                    <td>140kW</td>
-                    <td>7</td>
-                    <td>6A</td>
-                    <td>4D Wagon</td>
-                    <td>4WD</td>
-                    <td>28885mm</td>
+                    <td>{{ item.car.car_id }}</td>
+                    <td>{{ item.car.make_name }}</td>
+                    <td>{{ item.car.model }}</td>
+                    <td>{{ item.car.series }}</td>
+                    <td>{{ item.car.seriesYear }}</td>
+                    <td>{{ item.car.price_new }}</td>
+                    <td>{{ item.return_store.name }}</td>
+                    <td>{{ item.car.engine_size }}</td>
+                    <td>{{ item.car.fuel_system }}</td>
+                    <td>{{ item.car.tank_capacity }}</td>
+                    <td>{{ item.car.power }}</td>
+                    <td>{{ item.car.seating_capacity }}</td>
+                    <td>{{ item.car.standard_transmission }}</td>
+                    <td>{{ item.car.body_type }}</td>
+                    <td>{{ item.car.drive }}</td>
+                    <td>{{ item.car.wheelbase }}</td>
                 </tr>
-                <tr>
-                    <td>14806</td>
-                    <td>Land Rover</td>
-                    <td>Discovery 3</td>
-                    <td>HSE</td>
-                    <td>2006</td>
-                    <td>83650</td>
-                    <td>Springwood Store</td>
-                    <td>2.7L</td>
-                    <td>Diesel Turbo F/Inj</td>
-                    <td>82L</td>
-                    <td>140kW</td>
-                    <td>7</td>
-                    <td>6A</td>
-                    <td>4D Wagon</td>
-                    <td>4WD</td>
-                    <td>28885mm</td>
-                </tr>
-                <tr>
-                    <td>14806</td>
-                    <td>Land Rover</td>
-                    <td>Discovery 3</td>
-                    <td>HSE</td>
-                    <td>2006</td>
-                    <td>83650</td>
-                    <td>Springwood Store</td>
-                    <td>2.7L</td>
-                    <td>Diesel Turbo F/Inj</td>
-                    <td>82L</td>
-                    <td>140kW</td>
-                    <td>7</td>
-                    <td>6A</td>
-                    <td>4D Wagon</td>
-                    <td>4WD</td>
-                    <td>28885mm</td>
-                </tr>
-                <tr>
-                    <td>14806</td>
-                    <td>Land Rover</td>
-                    <td>Discovery 3</td>
-                    <td>HSE</td>
-                    <td>2006</td>
-                    <td>83650</td>
-                    <td>Springwood Store</td>
-                    <td>2.7L</td>
-                    <td>Diesel Turbo F/Inj</td>
-                    <td>82L</td>
-                    <td>140kW</td>
-                    <td>7</td>
-                    <td>6A</td>
-                    <td>4D Wagon</td>
-                    <td>4WD</td>
-                    <td>28885mm</td>
-                </tr>
-                <tr>
-                    <td>14806</td>
-                    <td>Land Rover</td>
-                    <td>Discovery 3</td>
-                    <td>HSE</td>
-                    <td>2006</td>
-                    <td>83650</td>
-                    <td>Springwood Store</td>
-                    <td>2.7L</td>
-                    <td>Diesel Turbo F/Inj</td>
-                    <td>82L</td>
-                    <td>140kW</td>
-                    <td>7</td>
-                    <td>6A</td>
-                    <td>4D Wagon</td>
-                    <td>4WD</td>
-                    <td>28885mm</td>
-                </tr>
-                <tr>
-                    <td>14806</td>
-                    <td>Land Rover</td>
-                    <td>Discovery 3</td>
-                    <td>HSE</td>
-                    <td>2006</td>
-                    <td>83650</td>
-                    <td>Springwood Store</td>
-                    <td>2.7L</td>
-                    <td>Diesel Turbo F/Inj</td>
-                    <td>82L</td>
-                    <td>140kW</td>
-                    <td>7</td>
-                    <td>6A</td>
-                    <td>4D Wagon</td>
-                    <td>4WD</td>
-                    <td>28885mm</td>
-                </tr>
-                <tr>
-                    <td>14806</td>
-                    <td>Land Rover</td>
-                    <td>Discovery 3</td>
-                    <td>HSE</td>
-                    <td>2006</td>
-                    <td>83650</td>
-                    <td>Springwood Store</td>
-                    <td>2.7L</td>
-                    <td>Diesel Turbo F/Inj</td>
-                    <td>82L</td>
-                    <td>140kW</td>
-                    <td>7</td>
-                    <td>6A</td>
-                    <td>4D Wagon</td>
-                    <td>4WD</td>
-                    <td>28885mm</td>
-                </tr>
-                <tr>
-                    <td>14806</td>
-                    <td>Land Rover</td>
-                    <td>Discovery 3</td>
-                    <td>HSE</td>
-                    <td>2006</td>
-                    <td>83650</td>
-                    <td>Springwood Store</td>
-                    <td>2.7L</td>
-                    <td>Diesel Turbo F/Inj</td>
-                    <td>82L</td>
-                    <td>140kW</td>
-                    <td>7</td>
-                    <td>6A</td>
-                    <td>4D Wagon</td>
-                    <td>4WD</td>
-                    <td>28885mm</td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
+        {% endif %}
         {% endif %}
     </div>
 </main>
