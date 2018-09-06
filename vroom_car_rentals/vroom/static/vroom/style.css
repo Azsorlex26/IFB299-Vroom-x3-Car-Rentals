@@ -1,0 +1,372 @@
+/* Defining color constants */
+:root {
+  --blue: #374AAD;
+  --light-grey: #ecf0f1;
+  --white: #ffffff;
+  --black: #000000;
+  --input: #f2f2f2;
+  --purple: #9626A6;
+  --yellow: #DEF735;
+  --orange: #FDC437;
+}
+
+/* Styles for mobile / tablets */
+header {
+    height: 150px;
+    flex-flow: column;
+
+}
+
+main {
+    min-height: calc((100vh) - (200px));
+}
+
+.sub-cont {
+    margin: 0 5px;
+    flex-flow: column;
+}
+
+header h1 {
+    margin-bottom: 0;
+}
+
+.main-cont form input[type=search] {
+    min-width: 0;
+}
+
+
+/*----------------------------------------------------------------------------*/
+/* Content flow for tablet view */
+
+@media screen and (min-width: 415px) {
+    .sub-cont {
+        flex-flow: row;
+    }
+}
+
+/*----------------------------------------------------------------------------*/
+/* When on desktop add or override the mobile/tablet properties to these */
+@media screen and (min-width: 1365px) {
+    header {
+        height: 100px;
+        justify-content: space-between;
+        flex-flow: row wrap;
+    }
+
+    header h1 {
+        margin-left: 15%;
+        margin-bottom: 0.67em;
+    }
+
+    nav {
+        margin-right: 15%;
+    }
+
+    main {
+        min-height: calc((100vh) - (150px));
+    }
+
+    .sub-cont {
+        margin: 0 20%;
+    }
+
+}
+
+/*----------------------------------------------------------------------------*/
+/* These styles are CONSTANT no matter what browser size */
+
+/*==========Styles for index.html==========*/
+
+html {
+    min-height: 100vh;
+    height: 100px;
+}
+
+body {
+    margin: 0;
+    background-color: var(--light-grey);
+    font-family: 'Lato', sans-serif;
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--white);
+    color: var(--blue);
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 40px;
+}
+
+nav {
+    height: 100px;
+    display: flex;
+    align-items: flex-end;
+    color: var(--black);
+}
+
+nav ul {
+    padding: 0;
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-end;
+    list-style-type: none;
+    align-items: center;
+    margin: 25px 0;
+}
+
+nav ul li {
+    margin: 0 10px;
+    font-size: 22px;
+}
+
+nav a {
+    color: var(--black);
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: var(--blue);
+}
+
+.sign-up-btn {
+    border: 1px solid black;
+    padding: 0;
+}
+
+.sign-up-btn a {
+    display: block;
+    padding: 5px 10px;
+}
+
+.sign-up-btn:hover {
+    background-color: var(--blue);
+    border: 1px solid white;
+}
+
+.sign-up-btn:hover a {
+    color: white;
+}
+
+footer {
+    background-color: var(--white);
+    color: var(--black);
+    width: 100%;
+    height: 50px;
+}
+
+main {
+    flex: 1 0 auto;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: column;
+}
+
+.main-cont {
+    flex-grow: 2;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--blue);
+    padding: 0 10%;
+    min-height: 280px;
+    flex-shrink: 0;
+}
+
+.main-cont h2 {
+    font-size: 30px;
+    margin: 0;
+    color: var(--black);
+}
+
+.main-cont p {
+    font-size: 20px;
+    margin: 0;
+    color: var(--black);
+}
+
+#index-form {
+    display: flex;
+    flex-flow: row;
+    margin: 20px 0;
+}
+
+#index-form input[type=search] {
+    border: 0;
+    height: 50px;
+    padding: 0px 20px;
+    font-size: 20px;
+    width: 100%;
+    min-width: 500px;
+    background-color: var(--input);
+    font-family: 'Lato', sans-serif;
+}
+
+#index-form input[type=search]:hover {
+    background-color: var(--white);
+}
+
+#index-form input:focus {
+    outline: 0;
+}
+
+#index-form input[type=submit] {
+    font-size: 20px;
+    text-decoration: none;
+    color: var(--white);
+    border: 1px solid var(--white);
+    padding: 10px 20px;
+    background-color: var(--blue);
+    font-family: 'Lato', sans-serif;
+}
+
+#index-form input[type=submit]:hover {
+    background-color: var(--white);
+    color: var(--blue);
+    cursor: pointer;
+}
+
+.sub-cont {
+    display: flex;
+    flex-grow: 1;
+    background-color: var(--light-grey);
+}
+
+.sub-cont article {
+    text-align: center;
+    flex: 1;
+    padding: 10px 20px;
+}
+
+h1 a {
+    text-decoration: none;
+    color: var(--blue);
+}
+
+.main-cont img {
+    width: 131px;
+    height: 80px;
+    margin-top: 10px;
+}
+
+.sub-cont img {
+    width: 40px;
+    height: 40px;
+    margin-top: 10px;
+}
+
+footer p {
+    margin-left: 30px;
+}
+
+/*
+================================================================================
+*/
+/*==========Styles for search.html==========*/
+
+#cars-form {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    font-size: 20px;
+    width: 60%;
+    min-width: 300px;
+    padding: 20px 0;
+    border: 2px solid var(--purple);
+    background-color: var(--white);
+}
+
+#main-search {
+    display: flex;
+    flex-flow: row;
+    width: 90%;
+}
+
+#main-search input[type=search] {
+    border: 0;
+    padding: 5px 20px;
+    font-size: 20px;
+    width: 100%;
+    min-width: 150px;
+    background-color: #f2f2f2;
+}
+
+#main-search input[type=search]:hover {
+    background-color: var(--white);
+}
+
+#main-search input[type=search]:focus {
+    outline: 0;
+}
+
+#main-search input[type=submit] {
+    min-width: 80px;
+    font-size: 20px;
+    background-color: var(--purple);
+    color: var(--white);
+    border: 0;
+    text-transform: uppercase;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#main-search input[type=submit]:hover {
+    background-color: var(--blue);
+}
+
+.search-heading {
+    border: 2px solid var(--purple);
+    width: 60%;
+    min-width: 300px;
+    text-align: center;
+    background-color: var(--purple);
+    color: var(--white) !important;
+}
+
+.results {
+    flex-flow: column;
+    justify-content: center;
+    text-align: center;
+    margin: 0 10% !important;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+tbody {
+}
+
+tr {
+    background-color: var(--white);
+    border-bottom: 10px solid #ecf0f1;
+}
+
+td {
+    padding: 5px 10px;
+    text-align: right;
+}
+
+tr:first-of-type {
+    background-color: var(--purple);
+    color: var(--white);
+    border: none;
+}
+
+th {
+    padding: 10px 10px;
+}
+
+td:first-child {
+    text-align: left;
+}

@@ -1,0 +1,11 @@
+<!--The header of the document (main bar up the top) contains the navigation and the name of the website-->
+    <header>
+        <!--The name of the website (also links to the home page)-->
+        <h1><a href="{% url 'vroom:index' %}">Vroom Car Rentals</a></h1>
+        <!--Navigation bar (contains a list of navigation elements that take you to the coresponding page)-->
+        <nav>
+            <ul>
+                <li><a href="{% url 'vroom:cars' %}">Cars</a></li>
+            </ul>
+        </nav>
+    </header>

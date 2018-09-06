@@ -1,0 +1,36 @@
+{% extends "vroom/base.html" %}
+
+{% block content %}
+{% load static %}
+<!--The main content of the webpage-->
+<main>
+    <!--First section of the main content. A banner which usually displays the most important information-->
+    <section class="main-cont">
+        <img src="{% static 'vroom/images/logo-white.png' %}" alt="" />
+        <h2>Welcome to Vroom Car Rentals</h2>
+        <p>Vroom Car Rentals is the best place to go if you're looking to rent a car and have a wide variety to choose.</p>
+        <form id="index-form" name="search" method="GET" action="{% url 'vroom:cars' %}">
+            <input type="search" name="search" placeholder="Search for a car..." />
+            <input type="submit" value="Get Started" />
+        </form>
+    </section>
+    <!--Second section which contains the less important information but is still useful-->
+    <div class="sub-cont">
+        <article>
+            <img src="{% static 'vroom/images/search-purple.png' %}" alt="" />
+            <h3 style="color: var(--purple)">Find Cars</h3>
+            <p>Search over 500 cars filtering by name, price, seats and much more.</p>
+        </article>
+        <article>
+            <img src="{% static 'vroom/images/history-blue.png' %}" alt="" />
+            <h3 style="color: var(--blue)">Rental History</h3>
+            <p>Log in to be able to view your history of rentals with us.<p>
+        </article>
+        <article>
+            <img src="{% static 'vroom/images/sign-up-orange.png' %}" alt="" />
+            <h3 style="color: var(--orange)">Sign Up</h3>
+            <p>Don't have an account? Sign up for one now. It's free!</p>
+        </article>
+    </div>
+</main>
+{% endblock %}
