@@ -335,7 +335,7 @@ footer p {
     flex-flow: column;
     justify-content: center;
     text-align: center;
-    margin: 0 10% !important;
+    margin: 0 5% !important;
 }
 
 table {
@@ -355,6 +355,7 @@ tr {
 td {
     padding: 5px 10px;
     text-align: right;
+    font-size: 13px;
 }
 
 tr:first-of-type {
