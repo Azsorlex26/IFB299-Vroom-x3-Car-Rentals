@@ -6,6 +6,16 @@
         <nav>
             <ul>
                 <li><a href="{% url 'vroom:cars' %}">Cars</a></li>
+                <li><a href="{% url 'vroom:login' %}">Login</a></li>
+                {% if request.session.access == "GENERAL_STAFF" %}
+                <li><a href="#">Customers</a></li>
+                <li><a href="#">Rental History</a></li>
+                {% endif %}
+                {% if request.session.username != None %}
+                <li class="sign-up-btn"><a href="{% url 'vroom:logout' %}">Log Out</a></li>
+                <b>Logged in as: {{request.session.username}}</b>
+                {% endif %}
+
             </ul>
         </nav>
     </header>

@@ -25,7 +25,9 @@
         <table>
             <tbody>
                 <tr>
+                    {% if request.session.access == 'GENERAL_STAFF' %}
                     <th>ID</th>
+                    {% endif %}
                     <th>Make</th>
                     <th>Model</th>
                     <th>Series</th>
@@ -44,7 +46,9 @@
                 </tr>
                 {% for item in list_of_cars %}
                 <tr>
+                    {% if request.session.access == 'GENERAL_STAFF' %}
                     <td>{{ item.car.car_id }}</td>
+                    {% endif %}
                     <td>{{ item.car.make_name }}</td>
                     <td>{{ item.car.model }}</td>
                     <td>{{ item.car.series }}</td>

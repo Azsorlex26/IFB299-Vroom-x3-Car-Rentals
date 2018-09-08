@@ -54,12 +54,12 @@ header h1 {
     }
 
     header h1 {
-        margin-left: 15%;
+        margin-left: 14%;
         margin-bottom: 0.67em;
     }
 
     nav {
-        margin-right: 15%;
+        margin-right: 14%;
     }
 
     main {
@@ -370,4 +370,112 @@ th {
 
 td:first-child {
     text-align: left;
+}
+
+/*
+================================================================================
+*/
+/*==========Styles for log-in.html==========*/
+
+.account-form {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin-top: 50px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.account-form fieldset {
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+    width: 80%;
+    max-width: 470px;
+    margin: 0 auto;
+    padding: 0;
+    border: 0;
+    background-color: var(--white);
+}
+
+.account-form legend {
+    background-color: var(--purple);
+    width: 100%;
+    font-size: 30px;
+    color: var(--white);
+    padding: 10px 0;
+    text-align: center;
+}
+
+.account-form p {
+    margin: 10px 0;
+}
+
+.blue {
+    color: var(--blue);
+}
+
+.account-form input {
+    width: 80%;
+    margin: 15px auto;
+}
+
+.account-form input[type=text], .account-form input[type=password] {
+    background: var(--input);
+    border: 0;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+    text-align: center;
+}
+
+.account-form input[type=text]:hover, .account-form input[type=password]:hover {
+    background: var(--white);
+}
+
+.account-form input[type=text]:focus, .account-form input[type=password]:focus {
+    outline: 0;
+}
+
+.account-form input[type=submit], input[type=reset] {
+    background-color: var(--purple);
+    text-transform: uppercase;
+    border: 0;
+    padding: 15px;
+    color: var(--white);
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid var(--purple);
+}
+
+.account-form input[type=submit]:hover {
+    background-color: var(--white);
+    color: var(--purple);
+}
+
+.sign-up-prompt {
+    background-color: var(--white);
+    margin: -10px auto 20px auto;
+    width: 80%;
+    max-width: 470px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.sign-up-prompt a {
+    width: 100px;
+    margin: 0 auto;
+    background-color: var(--blue);
+    color: var(--white);
+    border: 1px solid var(--blue);
+    padding: 10px 20px;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.sign-up-prompt a:hover {
+    background-color: var(--white);
+    color: var(--blue);
 }
