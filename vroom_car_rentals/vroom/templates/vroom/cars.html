@@ -11,9 +11,13 @@
             <div id="main-search">
                 <input type="search" name="search" id="search-text" placeholder="Enter a name" />
                 <input type="submit" id="search-btn" value="Search"/>
-                <select name="ordering">
-                    <option disabled selected value>Order by: </option>
-                    <option value="store">Store</option>
+            </div>
+            <div id="filters">
+                <select name="store">
+                    <option value="nothing">Store:</option>
+                    {% for item in stores %}
+                    <option value={{ item.name }}>{{ item.name }}</option>
+                    {% endfor %}
                 </select>
             </div>
         </form>

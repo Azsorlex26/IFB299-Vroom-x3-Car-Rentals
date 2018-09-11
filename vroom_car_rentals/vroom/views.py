@@ -11,11 +11,16 @@ def cars(request):
         filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the cars retrieved
         cars_by_name = cars.filter(car__model__icontains=filter) # Filter the cars so that only ones with a similar model name appear
 
-        context = {'list_of_cars': cars_by_name} # Create a context dictionary that contains the retrieved and filtered cars
+        if 'store' in request.GET and not request.GET.get('store') == "nothing": # Applies the store filter on top if applicable
+            cars_by_name = cars_by_name.filter(return_store__name=request.GET.get('store'))
+
+        stores = Store.objects.order_by('name') # This distinct tag doesn't change anything at all for some reason
+
+        context = {'list_of_cars': cars_by_name, 'stores': stores} # Create a context dictionary that contains the retrieved and filtered cars
 
         return render(request, 'vroom/cars.html', context) # Render the cars page with the context included
-    else: # The user has entered the cars page without entering any search
-        return render(request, 'vroom/cars.html')
+    
+    return render(request, 'vroom/cars.html') #The user has entered the cars page without entering any search
 
 def login(request):
     if 'id' in request.POST and 'password' in request.POST: # The user has entered the login site by entering their login details
