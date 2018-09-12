@@ -17,10 +17,7 @@ def authenticate_user(check_id, check_password):
 
     users = get_user(check_id, check_password);
 
-    if not users: # No users were found
-        return False
-    else: # A user was found
-        return True
+    return users; #True if a user was found. False if not
 
 def get_user_info(check_id, check_password):
     # Gets the name and role name for the specific user (assumes the id and password exists in the database)
