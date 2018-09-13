@@ -24,7 +24,7 @@ def cars(request):
         seriesYear = Car.objects.order_by('seriesYear')
 
         
-		context = {'list_of_cars': cars_by_name, 'cars_by_series': cars_by_seriesYear, 'stores': stores, 'seriesYear': seriesYear} # Create a context dictionary that contains the retrieved and filtered cars
+        context = {'list_of_cars': cars_by_name, 'cars_by_series': cars_by_seriesYear, 'stores': stores, 'seriesYear': seriesYear} # Create a context dictionary that contains the retrieved and filtered cars
 		
         return render(request, 'vroom/cars.html', context) # Render the cars page with the context included
     
