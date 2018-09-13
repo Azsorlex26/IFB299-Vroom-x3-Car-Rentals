@@ -8,10 +8,9 @@ def index(request):
 def cars(request):
     if 'search' in request.GET: # The user has entered the cars page via the home site search
         cars = get_all_cars() # Retrieve all the cars and the relevant information (from functions.py)
-        carsYear = car_seriesYear() # Retrieve all the cars and the relevant information (from functions.py)
+        cars_by_seriesYear = car_seriesYear() # Retrieve all the cars and the relevant information (from functions.py)
         filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the cars retrieved
         cars_by_name = cars.filter(car__model__icontains=filter) # Filter the cars so that only ones with a similar model name appear
-        cars_by_seriesYear = carsYear
 
         if 'store' in request.GET and not request.GET.get('store') == "nothing": # Applies the store filter on top if applicable
             cars_by_name = cars_by_name.filter(return_store__name=request.GET.get('store'))
@@ -19,16 +18,19 @@ def cars(request):
         stores = Store.objects.order_by('name') # This distinct tag doesn't change anything at all for some reason
 
         if 'year' in request.GET and not request.GET.get('year') == "nothing":
-            cars_by_seriesYear = cars_by_seriesYear.filter(seriesYear__exact=request.GET.get('car'))
+            cars_by_seriesYear = cars_by_seriesYear.filter(seriesYear__gt=request.GET.get('year'))
 
-        seriesYear = Car.objects.order_by('seriesYear')
+        seriesYear = Car.objects.values('seriesYear').order_by('seriesYear').distinct()
 
         
         context = {'list_of_cars': cars_by_name, 'cars_by_series': cars_by_seriesYear, 'stores': stores, 'seriesYear': seriesYear} # Create a context dictionary that contains the retrieved and filtered cars
 		
         return render(request, 'vroom/cars.html', context) # Render the cars page with the context included
-    
-    return render(request, 'vroom/cars.html') #The user has entered the cars page without entering any search
+		
+    else:
+        cars = get_all_cars() # Retrieve all the cars and the relevant information (from functions.py)
+        context = {'list_of_cars': cars} # Render the cars page with the context included
+        return render(request, 'vroom/cars.html', context) #The user has entered the cars page without entering any search
 
 def login(request):
     if 'id' in request.POST and 'password' in request.POST: # The user has entered the login site by entering their login details
