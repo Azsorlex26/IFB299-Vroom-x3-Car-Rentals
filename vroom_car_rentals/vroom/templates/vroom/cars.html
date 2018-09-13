@@ -19,6 +19,12 @@
                     <option value={{ item.name }}>{{ item.name }}</option>
                     {% endfor %}
                 </select>
+				<select name="year">
+                    <option value="nothing">Year:</option>
+                    {% for item in seriesYear %}
+                    <option value={{ item.seriesYear }}>{{ item.seriesYear }}</option>
+                    {% endfor %}
+                </select>
             </div>
         </form>
     </section>

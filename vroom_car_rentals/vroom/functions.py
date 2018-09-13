@@ -11,6 +11,12 @@ def get_all_cars():
     cars = Order.objects.select_related('car', 'return_store').filter(return_date__in=dates)
 
     return cars
+	
+def car_seriesYear():
+	
+	cars = Car.objects.values('car_id', 'seriesYear')
+	
+	return cars
 
 def authenticate_user(check_id, check_password):
     # Checks to see if the user exists in the database
