@@ -17,18 +17,26 @@
     <!--Second section which contains the less important information but is still useful-->
     <div class="sub-cont">
         <article>
-            <img src="{% static 'vroom/images/search-purple.png' %}" alt="" />
-            <h3 style="color: var(--purple)">Find Cars</h3>
+            <a href="{% url 'vroom:cars' %}">
+                <img src="{% static 'vroom/images/search-purple.png' %}" alt="" />
+                <h3 style="color: var(--purple)">Find Cars</h3>
+            </a>
             <p>Search over 500 cars filtering by name, price, seats and much more.</p>
         </article>
         <article>
-            <img src="{% static 'vroom/images/history-blue.png' %}" alt="" />
-            <h3 style="color: var(--blue)">Rental History</h3>
+            {% if request.session.username != None %} <!--Only link when a user is logged in-->
+            <a href="#">
+                {% endif %}
+                <img src="{% static 'vroom/images/history-blue.png' %}" alt="" />
+                <h3 style="color: var(--blue)">Rental History</h3>
+            </a>
             <p>Log in to be able to view your history of rentals with us.<p>
         </article>
         <article>
-            <img src="{% static 'vroom/images/sign-up-orange.png' %}" alt="" />
-            <h3 style="color: var(--orange)">Sign Up</h3>
+            <a href="#">
+                <img src="{% static 'vroom/images/sign-up-orange.png' %}" alt="" />
+                <h3 style="color: var(--orange)">Sign Up</h3>
+            </a>
             <p>Don't have an account? Sign up for one now. It's free!</p>
         </article>
     </div>
