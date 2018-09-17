@@ -16,6 +16,10 @@ def cars(request):
         cars = cars.filter(car__model__icontains=filter) # Filter the cars so that only ones with a similar model name appear
 
         filter_names = list() # Create a list to store the currently selected filter values
+	
+		if 'sort' in request.GET:
+            if request.GET.get('sort') == "Car_TankCapacity":
+                 cars_by_name = cars_by_name.order_by('-car__tank_capacity')
 
         if 'store' in request.GET and request.GET.get('store') != "":
             cars = cars.filter(return_store__name=request.GET.get('store'))
