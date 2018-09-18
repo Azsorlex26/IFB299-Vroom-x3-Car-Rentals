@@ -14,7 +14,11 @@
                 <select name="store">
                     <option selected disabled>Select Store:</option>
                     {% for item in list_of_stores %}
+                    {% if not item.name in selected_store_name %}
                     <option value={{ item.store_id }}>{{ item.name }}</option>
+                    {% else %}
+                    <option value={{ item.store_id }} selected>{{ item.name }}</option>
+                    {% endif %}
                     {% endfor %}
                 </select>
                 <input type="submit">
