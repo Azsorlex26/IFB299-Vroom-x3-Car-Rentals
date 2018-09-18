@@ -4,7 +4,25 @@
 {% load static %}
 
 <main>
-    
+    <div class="sub-cont results">
+        <h3>Stores</h3>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Store Name</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                </tr>
+                {% for store in stores %}
+                <tr>
+                    <td>{{ store.name }}</td>
+                    <td id="stores">{{ store.address }}</td>
+                    <td>{{ store.phone }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </main>
 
 {% endblock %}

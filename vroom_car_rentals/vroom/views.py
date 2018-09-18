@@ -7,21 +7,27 @@ def index(request):
 
 def cars(request):
     cars = get_all_cars() # Retrieve all the cars and the relevant information (from functions.py)
-    stores = Store.objects.values('name').order_by('name') # Retrieves the names of the stores
-    context = {'list_of_cars': cars, 'stores': stores} # Create a context dictionary that contains the retrieved cars and stores
+    stores = Store.objects.values('name') # Retrieves the names of the stores
+    seriesYear = Car.objects.values('seriesYear').order_by('seriesYear').distinct()
+    context = {'list_of_cars': cars, 'stores': stores, 'seriesYear': seriesYear} # Create a context dictionary that contains the retrieved cars and stores
     
-    if 'search' in request.GET: # The user has entered the cars page via the home site search
+    if 'search' in request.GET: # The user has entered the cars page via the home site search or the cars page search bar
         filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the cars retrieved
         cars = cars.filter(car__model__icontains=filter) # Filter the cars so that only ones with a similar model name appear
 
-        if 'store' in request.GET and not request.GET.get('store') == "nothing":
+        filter_names = list() # Create a list to store the currently selected filter values
+
+        if 'store' in request.GET and request.GET.get('store') != "":
             cars = cars.filter(return_store__name=request.GET.get('store'))
+            filter_names.append(request.GET.get('store'))
 
-        if 'year' in request.GET and not request.GET.get('year') == "nothing":
+        if 'year' in request.GET and request.GET.get('year') != "":
             cars = cars.filter(car__seriesYear=request.GET.get('year'))
+            filter_names.append(int(request.GET.get('year')))
 
-        seriesYear = Car.objects.values('seriesYear').order_by('seriesYear').distinct()
-        context = {'list_of_cars': cars, 'stores': stores, 'seriesYear': seriesYear} # Update the context with new values
+        context['list_of_cars'] = cars # Update the context with new results
+        if len(filter_names) > 0:
+            context['filter_names'] = filter_names
 		
     return render(request, 'vroom/cars.html', context)
 

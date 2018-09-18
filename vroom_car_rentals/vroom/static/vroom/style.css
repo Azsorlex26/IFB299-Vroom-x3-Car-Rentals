@@ -369,6 +369,10 @@ td {
     font-size: 13px;
 }
 
+#stores { /* For the td element on the stores page  */
+    text-align: center;
+}
+
 tr:first-of-type {
     background-color: var(--purple);
     color: var(--white);
