@@ -2,6 +2,41 @@
 
 {% block content %}
 {% load static %}
+
+<script>
+	function onload(){
+		document.getElementById("tank_high").disabled=true;
+		document.getElementById("price_high").disabled=true;
+		document.getElementById("power_high").disabled=true;
+	}
+	
+	function hide_drop(value){
+		document.getElementById("tank_high").style.visibility = "hidden";
+		document.getElementById("price_high").style.visibility = "hidden";
+		document.getElementById("power_high").style.visibility = "hidden";
+		
+		document.getElementById("tank_high").disabled=true;
+		document.getElementById("price_high").disabled=true;
+		document.getElementById("power_high").disabled=true;
+
+
+		if (value == 'tank'){
+			document.getElementById("tank_high").style.visibility = "visible";
+			document.getElementById("tank_high").disabled=false;
+		}
+		
+		else if (value == 'price'){
+			document.getElementById("price_high").style.visibility = "visible";
+			document.getElementById("price_high").disabled=false;
+		}
+		
+		else if (value == 'power'){
+			document.getElementById("power_high").style.visibility = "visible";
+			document.getElementById("power_high").disabled=false;
+		}
+	}
+</script>
+
 <!--The main content of the webpage-->
 <main>
     <!--First section of the main content. A banner which usually displays the most important information-->
@@ -12,13 +47,46 @@
                 <input type="search" name="search" id="search-text" placeholder="Enter a name" />
                 <input type="submit" id="search-btn" value="Search"/>
             </div>
+			
 			<div id="sortBy">
-				Sort By <i>(optional)</i><br>
-				<input type="radio" name="sort" value="Car_TankCapacity"> Tank Capacity<br>
-				<input type="radio" name="sort" value="Something"> Something Else<br>
-				<input type="radio" name="sort" value="Something2"> Something Else
+				<strong>Sort By: </strong><br>
+				<input type="radio" name="sort" value="none" onclick="hide_drop('none');"> Default <br>
+				<input type="radio" name="sort" value="Car_TankCapacity" onclick="hide_drop('tank');"> Tank Capacity
+				<select name="tank_high" id="tank_high" style="visibility:hidden" >
+                    <option value="high">Highest to Lowest</option>
+					<option value="low">Lowest to Highest</option>
+				</select>
+				<br>
+				
+				<input type="radio" name="sort" value="Price_New" onclick="hide_drop('price');"> Price
+				<select name="price_high" id="price_high" style="visibility:hidden">
+					<option value="low">Lowest to Highest</option>
+					<option value="high">Highest to Lowest</option>
+				</select>
+				<br>
+				
+				<input type="radio" name="sort" value="Power" onclick="hide_drop('power');"> Power
+				<select name="power_high" id="power_high" style="visibility:hidden">
+					<option value="high">Highest to Lowest</option>
+					<option value="low">Lowest to Highest</option>
+				</select>
+				<br>
+				
 			</div>
+			<script type="text/javascript"> onload();</script>
+			
             <div id="filters">
+			<strong>Filter By:</strong> <br>
+			    <select name="drive">
+                    <option value="">Drive:</option>
+                    {% for item in cars %}
+                    {% if not item.drive in filter_names %}
+                    <option value={{ item.drive }}>{{ item.drive }}</option>
+                    {% else %}
+                    <option value={{ item.drive }} selected>{{ item.drive }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
                 <select name="store">
                     <option value="">Store:</option>
                     {% for item in stores %}
