@@ -107,6 +107,26 @@
                     {% endif %}
                     {% endfor %}
                 </select>
+                <select name="fuel_system">
+                    <option value="">Fuel System:</option>
+                    {% for item in fuel_system %}
+                    {% if not item.fuel_system in filter_names %}
+                    <option value={{ item.fuel_system }}>{{ item.fuel_system }}</option>
+                    {% else %}
+                    <option value={{ item.fuel_system }} selected>{{ item.fuel_system }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <select name="drive">
+                    <option value="">Drive:</option>
+                    {% for item in drive %}
+                    {% if not item.drive in filter_names %}
+                    <option value={{ item.drive }}>{{ item.drive }}</option>
+                    {% else %}
+                    <option value={{ item.drive }} selected>{{ item.drive }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
             </div>
         </form>
     </section>
