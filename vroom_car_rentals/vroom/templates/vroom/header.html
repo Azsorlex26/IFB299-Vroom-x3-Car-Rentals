@@ -11,6 +11,7 @@
                 {% if request.session.access == "GENERAL_STAFF" %}
                 <li><a href="#">Customers</a></li>
                 <li><a href="#">Rental History</a></li>
+                <li><a href="{% url 'vroom:storehistory' %}">Store History</a></li>
                 {% else %} <!--For users-->
                 <li><a href="#">Rental History</a></li>
                 {% endif %}

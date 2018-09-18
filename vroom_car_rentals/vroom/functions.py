@@ -11,6 +11,20 @@ def get_all_cars():
     cars = Order.objects.select_related('car', 'return_store').filter(return_date__in=dates)
 
     return cars
+
+def get_all_orders():
+    # Retrieves all information about orders
+
+    orders = Order.objects.all()
+
+    return orders
+
+def get_all_stores():
+    # Retrieves all informmation about stores
+
+    stores = Store.objects.all()
+
+    return stores
 	
 def car_seriesYear():
 	

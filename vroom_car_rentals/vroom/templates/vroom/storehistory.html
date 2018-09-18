@@ -1,0 +1,100 @@
+{% extends "vroom/base.html" %}
+
+{% block content %}
+{% load static %}
+<!--The main content of the webpage-->
+<main>
+    <!--First section of the main content. A banner which usually displays the most important information-->
+    <section class="main-cont">
+        <img src="{% static 'vroom/images/logo-white.png' %}" alt="" />
+        <h2>History of A Store</h2><br>
+        <div id="filters">
+            <h4>Select A Store to View</h4>
+            <form id="store-history-form" name="searchForm" method="GET" action="{% url 'vroom:storehistory' %}">
+                <select name="store">
+                    <option selected disabled>Select Store:</option>
+                    {% for item in list_of_stores %}
+                    <option value={{ item.store_id }}>{{ item.name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit">
+            </form>
+        </div>
+    </section>
+    <!--Second section which contains the less important information but is still useful-->
+    <div class="sub-cont results">
+        <!--List of search results-->
+        {% if request.session.access == 'GENERAL_STAFF' %}
+            {% if 'store' in request.GET %}
+            <div class="store-box">
+                <h2>Store ID: {{ selected_store_id }}</h3>
+                <h2>Store Name: {{ selected_store_name }}</h3>
+                <h3>Pickup Orders</h4> <!--Display Pickup Orders Table-->
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Creation Date</th>
+                            <th>Pickup Date</th>
+                            <th>Return Date</th>
+                            <th>Car ID</th>
+                            <th>Customer ID</th>
+                            <th>Pickup Store ID</th>
+                            <th>Return Store ID</th>
+                        </tr>
+                        {% for item in list_of_orders %} <!--For Each order in the list of orders-->
+                        {% if selected_store_id == item.pickup_store_id %} <!--If the Store ID matches the Pickup Store ID in the order-->
+                            <tr>
+                                <td>{{ item.order_id }}</td>
+                                <td>{{ item.create_date }}</td>
+                                <td>{{ item.pickup_date }}</td>
+                                <td>{{ item.return_date }}</td>
+                                <td>{{ item.car_id }}</td>
+                                <td>{{ item.customer_id }}</td>
+                                <td>{{ item.pickup_store_id }}</td>
+                                <td>{{ item.return_store_id }}</td>
+                            </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <h3>Return Orders</h4> <!--Display the Return Orders Table-->
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Creation Date</th>
+                            <th>Pickup Date</th>
+                            <th>Return Date</th>
+                            <th>Car ID</th>
+                            <th>Customer ID</th>
+                            <th>Pickup Store ID</th>
+                            <th>Return Store ID</th>
+                        </tr>
+                        {% for item in list_of_orders %} <!--For Each order in the list of orders-->
+                        {% if selected_store_id == item.return_store_id %} <!--If the Store ID matches the Return Store ID-->
+                            <tr>
+                                <td>{{ item.order_id }}</td>
+                                <td>{{ item.create_date }}</td>
+                                <td>{{ item.pickup_date }}</td>
+                                <td>{{ item.return_date }}</td>
+                                <td>{{ item.car_id }}</td>
+                                <td>{{ item.customer_id }}</td>
+                                <td>{{ item.pickup_store_id }}</td>
+                                <td>{{ item.return_store_id }}</td>
+                            </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <br><br>
+            </div>
+            {% else %}
+            <h2>Please Select A Store</h2>
+            {% endif %}
+        {% else %}
+        <h2>Staff Only Information - Please Login to Continue</h2>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

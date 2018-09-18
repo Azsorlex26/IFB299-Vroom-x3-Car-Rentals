@@ -56,3 +56,21 @@ def stores(request):
     stores = Store.objects.values('name', 'address', 'phone')
     context = {'stores' : stores}
     return render(request, 'vroom/stores.html', context)
+
+def storehistory(request):
+    if 'store' in request.GET:
+        orders = get_all_orders() # Retrive all the order information (from functions.py)
+        stores = get_all_stores() # Retrieve all the store information (from functions.py)
+        selected_store_id = int(request.GET.get('store')) # Retrieve the selected store from the html form
+        selected_store_name = "" # Set a default value for the store name, will always be overidden
+        for store in stores:
+            if(store.store_id == selected_store_id): # If the store id is the same as the selected store, overide the store name to equal that of the selected store
+                selected_store_name = store.name
+
+        context = {'list_of_orders': orders, 'list_of_stores': stores, 'selected_store_id': selected_store_id, 'selected_store_name': selected_store_name}
+    else:
+        stores = get_all_stores() # Retrieve all the store information (from functions.py)
+
+        context = {'list_of_stores': stores}
+
+    return render(request, 'vroom/storehistory.html', context) # Render the store history page with context
