@@ -8,10 +8,11 @@ def index(request):
 def cars(request):
     cars = get_all_cars() # Retrieve all the cars and the relevant information (from functions.py)
     stores = Store.objects.values('name') # Retrieves the names of the stores
+    make_name = Car.objects.values('make_name').order_by('make_name').distinct()
     seriesYear = Car.objects.values('seriesYear').order_by('seriesYear').distinct()
     fuel_system = Car.objects.values('fuel_system').order_by('fuel_system').distinct()
     drive = Car.objects.values('drive').order_by('drive').distinct()
-    context = {'list_of_cars': cars, 'stores': stores, 'seriesYear': seriesYear, 'fuel_system': fuel_system, 'drive': drive} # Create a context dictionary that contains the retrieved cars and stores
+    context = {'list_of_cars': cars, 'stores': stores, 'make_name': make_name, 'seriesYear': seriesYear, 'fuel_system': fuel_system, 'drive': drive} # Create a context dictionary that contains the retrieved cars and stores
     
     if 'search' in request.GET: # The user has entered the cars page via the home site search or the cars page search bar
         filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the cars retrieved
@@ -42,6 +43,10 @@ def cars(request):
             cars = cars.filter(return_store__name=request.GET.get('store'))
             filter_names.append(request.GET.get('store'))
 
+        if 'make_name' in request.GET and request.GET.get('make_name') != "":
+            cars = cars.filter(car__make_name=request.GET.get('make_name'))
+            filter_names.append(request.GET.get('make_name'))
+		
         if 'year' in request.GET and request.GET.get('year') != "":
             cars = cars.filter(car__seriesYear=request.GET.get('year'))
             filter_names.append(int(request.GET.get('year')))

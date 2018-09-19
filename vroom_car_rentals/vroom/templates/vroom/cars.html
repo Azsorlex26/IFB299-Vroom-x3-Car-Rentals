@@ -87,7 +87,17 @@
                     {% endif %}
                     {% endfor %}
                 </select>
-				<select name="year">
+                <select name="make_name">
+                    <option value="">Make:</option>
+                    {% for item in make_name %}
+                    {% if not item.make_name in filter_names %}
+                    <option value={{ item.make_name }}>{{ item.make_name }}</option>
+                    {% else %}
+                    <option value={{ item.make_name }} selected>{{ item.make_name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <select name="year">
                     <option value="">Year:</option>
                     {% for item in seriesYear %}
                     {% if not item.seriesYear in filter_names %}

@@ -25,12 +25,6 @@ def get_all_stores():
     stores = Store.objects.all()
 
     return stores
-	
-def car_seriesYear():
-	
-	cars = Car.objects.values('car_id', 'seriesYear')
-	
-	return cars
 
 def authenticate_user(check_id, check_password):
     # Checks to see if the user exists in the database
