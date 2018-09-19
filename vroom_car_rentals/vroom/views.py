@@ -21,23 +21,32 @@ def cars(request):
         filter_names = list() # Create a list to store the currently selected filter values
 	
         if 'sort' in request.GET:
+		#Sort the Results by Tank Capacity and determine sort input
             if request.GET.get('sort') == "Car_TankCapacity":
                 if request.GET.get('tank_high') == "high":
-                    cars = cars.order_by('-car__tank_capacity')
+					#Sort By Highest to lowest
+                    cars = cars.extra({'tank_capacity':"tank_capacity + 0"}).order_by('-tank_capacity')
                 elif request.GET.get('tank_high') == "low":
-                    cars = cars.order_by('car__tank_capacity')
-
+					#Sort By Lowest to highest
+                    cars = cars.extra({'tank_capacity':"tank_capacity + 0"}).order_by('tank_capacity')
+					
+		#Sort the Results by Price and determine sort input
             elif request.GET.get('sort') == "Price_New":
                 if request.GET.get('price_high') == "high":
+				#Sort from Highest to lowest
                     cars = cars.order_by('-car__price_new')
                 elif request.GET.get('price_high') == "low":
+				#Sort from lowest to highest
                     cars = cars.order_by('car__price_new')
 					
+		#Sort the Results by Power and determine sort input
             elif request.GET.get('sort') == "Power":
                 if request.GET.get('power_high') == "high":
-                    cars = cars.order_by('-car__power')
+				#Sort from Highest to lowest
+                    cars = cars.extra({'power':"power + 0"}).order_by('-power')
                 elif request.GET.get('power_high') == "low":
-                    cars = cars.order_by('car__power')
+				#Sort from lowest to highest
+                    cars = cars.extra({'power':"power + 0"}).order_by('power')
 
         if 'store' in request.GET and request.GET.get('store') != "":
             cars = cars.filter(return_store__name=request.GET.get('store'))
