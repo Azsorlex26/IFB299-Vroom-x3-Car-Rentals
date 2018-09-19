@@ -9,7 +9,8 @@ def cars(request):
     cars = get_all_cars() # Retrieve all the cars and the relevant information (from functions.py)
     stores = Store.objects.values('name') # Retrieves the names of the stores
     seriesYear = Car.objects.values('seriesYear').order_by('seriesYear').distinct()
-    context = {'list_of_cars': cars, 'stores': stores, 'seriesYear': seriesYear} # Create a context dictionary that contains the retrieved cars and stores
+    fuel_system = Car.objects.values('fuel_system').order_by('fuel_system').distinct()
+    context = {'list_of_cars': cars, 'stores': stores, 'seriesYear': seriesYear, 'fuel_system': fuel_system} # Create a context dictionary that contains the retrieved cars and stores
     
     if 'search' in request.GET: # The user has entered the cars page via the home site search or the cars page search bar
         filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the cars retrieved
@@ -17,7 +18,7 @@ def cars(request):
 
         filter_names = list() # Create a list to store the currently selected filter values
 	
-		if 'sort' in request.GET:
+        if 'sort' in request.GET:
             if request.GET.get('sort') == "Car_TankCapacity":
                  cars_by_name = cars_by_name.order_by('-car__tank_capacity')
 
@@ -28,6 +29,10 @@ def cars(request):
         if 'year' in request.GET and request.GET.get('year') != "":
             cars = cars.filter(car__seriesYear=request.GET.get('year'))
             filter_names.append(int(request.GET.get('year')))
+
+        if 'fuel_system' in request.GET and request.GET.get('fuel_system') != "":
+            cars = cars.filter(car__fuel_system=request.GET.get('fuel_system'))
+            filter_names.append(request.GET.get('fuel_system'))
 
         context['list_of_cars'] = cars # Update the context with new results
         if len(filter_names) > 0:

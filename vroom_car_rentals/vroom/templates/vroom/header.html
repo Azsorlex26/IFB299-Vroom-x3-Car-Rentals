@@ -10,10 +10,9 @@
                 {% if request.session.username != None %}
                 {% if request.session.access == "GENERAL_STAFF" %}
                 <li><a href="#">Customers</a></li>
-                <li><a href="#">Rental History</a></li>
-                <li><a href="{% url 'vroom:storehistory' %}">Store History</a></li>
+                <li><a href="{% url 'vroom:storehistory' %}">Rental History</a></li>
                 {% else %} <!--For users-->
-                <li><a href="#">Rental History</a></li>
+                <!-- Not Yet Implemented (For Sprint 2) <li><a href="#">Rental History</a></li> -->
                 {% endif %}
                 <li class="sign-up-btn"><a href="{% url 'vroom:logout' %}">Log Out</a></li>
                 <b>Logged in as: {{request.session.username}}</b>
