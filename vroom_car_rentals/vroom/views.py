@@ -44,7 +44,7 @@ def cars(request):
             filter_names.append(request.GET.get('store'))
 
         if 'make_name' in request.GET and request.GET.get('make_name') != "":
-            cars = cars.filter(car__make_name=request.GET.get('make_name'))
+            cars = cars.filter(car__make_name__contains=request.GET.get('make_name'))
             filter_names.append(request.GET.get('make_name'))
 		
         if 'year' in request.GET and request.GET.get('year') != "":
