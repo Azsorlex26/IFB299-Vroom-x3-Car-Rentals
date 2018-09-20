@@ -22,18 +22,21 @@ def cars(request):
 	
         if 'sort' in request.GET: # Sort the Results by Tank Capacity and determine sort input
             if request.GET.get('sort') == "Car_TankCapacity":
+                context['sort'] = 'tank_high' # Set field to sort by to tank_high
                 if request.GET.get('tank_high') == "high": #Sort By highest to lowest
                     cars = cars.extra({'tank_capacity':"tank_capacity + 0"}).order_by('-tank_capacity')
                 else: # Sort By Lowest to highest
                     cars = cars.extra({'tank_capacity':"tank_capacity + 0"}).order_by('tank_capacity')
 					
             elif request.GET.get('sort') == "Price_New": # Sort the Results by Price and determine sort input
+                context['sort'] = 'price_high' # Set field to sort by to price_high
                 if request.GET.get('price_high') == "high": # Sort from highest to lowest
                     cars = cars.order_by('-car__price_new')
                 else: # Sort from lowest to highest
                     cars = cars.order_by('car__price_new')
 					
-            else: # Sort the Results by Power and determine sort input
+            elif request.GET.get('sort') == "Power": # Sort the Results by Power and determine sort input
+                context['sort'] = 'power_high' # Set field to sort by to power_high
                 if request.GET.get('power_high') == "high": # Sort from highest to lowest
                     cars = cars.extra({'power':"power + 0"}).order_by('-power')
                 else: # Sort from lowest to highest

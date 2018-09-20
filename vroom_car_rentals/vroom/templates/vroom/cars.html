@@ -4,10 +4,8 @@
 {% load static %}
 
 <script>
-	function onload(){
-		document.getElementById("tank_high").disabled=true;
-		document.getElementById("price_high").disabled=true;
-		document.getElementById("power_high").disabled=true;
+	function onload() {
+        hide_drop("{{sort}}");
 	}
 	
 	function hide_drop(value){
@@ -15,13 +13,14 @@
 		document.getElementById("price_high").style.visibility = "hidden";
 		document.getElementById("power_high").style.visibility = "hidden";
 		
-		document.getElementById("tank_high").disabled=true;
-		document.getElementById("price_high").disabled=true;
-		document.getElementById("power_high").disabled=true;
+		document.getElementById("tank_high").disabled = true;
+		document.getElementById("price_high").disabled = true;
+		document.getElementById("power_high").disabled = true;
 
-		if (value != '') {
+		if (value != null) {
+            document.getElementById(value).checked = true;
             document.getElementById(value).style.visibility = "visible";
-		    document.getElementById(value).disabled=false;
+		    document.getElementById(value).disabled = false;
         }
 	}
 </script>
@@ -39,7 +38,7 @@
 			
 			<div id="sortBy">
 				<strong>Sort By:</strong><br>
-				<input type="radio" name="sort" value="none" onclick="hide_drop('');"> Default<br>
+				<input type="radio" name="sort" value="" onclick="hide_drop(null);"> Default<br>
 				<input type="radio" name="sort" value="Car_TankCapacity" onclick="hide_drop('tank_high');"> Tank Capacity
                 
                 <select name="tank_high" id="tank_high" style="visibility:hidden" >
@@ -60,7 +59,7 @@
 					<option value="high">Highest to Lowest</option>
 					<option value="low">Lowest to Highest</option>
 				</select>
-				<br>
+                <br>
 			</div>
 			<script type="text/javascript"> onload();</script>
 			
