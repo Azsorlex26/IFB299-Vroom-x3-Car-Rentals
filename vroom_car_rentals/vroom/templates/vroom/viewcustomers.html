@@ -1,0 +1,59 @@
+{% extends "vroom/base.html" %}
+
+{% block content %}
+{% load static %}
+<!-- Main content of the webpage -->
+<main>
+ <!--First section of the main content. A banner which usually displays the most important information-->
+    <section class="main-cont">
+        <h2 class="search-heading">Search</h2>
+        <form id="user-form" name="searchForm" method="GET" action="{% url 'vroom:viewcustomers' %}">
+            <div id="main-search">
+                <input type="search" name="search" id="search-text" placeholder="Enter a name" />
+                <input type="submit" id="search-btn" value="Search"/>
+                <select name="ordering">
+                    <option disabled selected value>Order by: </option>
+                    <option value="store">Store</option>
+                </select>
+            </div>
+        </form>
+    </section>
+    <!-- this here is for the return of the search -->
+    <div class="sub-cont results">
+        {% if request.session.access == 'GENERAL_STAFF' %} <!-- Check if the user is a member of staff -->
+            {% if list_of_user != None %}
+                <h3>Results</h3>
+                <!--List of search results-->
+                {% if not list_of_user %}
+                <p>Oops. We couldn't find any customers matching your search</p>
+                {% else %}
+                <table>
+                    <tbody>
+                        <tr>
+
+                            <th>user_id</th>
+                            <th>name</th>
+                            <th>phone</th>
+                            <th>address</th>
+                            <th>birthday</th>
+                            <th>role</th>
+                            
+                        </tr>
+                        {%for item in list_of_users%}
+                        <td>{{item.user.user_id}}</td>
+                        <td>{{item.user.name}}</td>
+                        <td>{{item.user.phone}}</td>
+                        <td>{{item.user.address}}</td>
+                        <td>{{item.user.birthday}}</td>
+                        <td>{{item.user.role}}</td>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            {% endif %}
+        {% else %}
+        <h2>Staff Only Information - Please Login to Continue</h2>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

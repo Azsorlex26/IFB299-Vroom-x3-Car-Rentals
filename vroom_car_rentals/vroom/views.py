@@ -75,19 +75,12 @@ def cars(request):
 		
     return render(request, 'vroom/cars.html', context)
 
-def view_customers(request):
-    if 'id' in request.POST and 'password' in request.POST: #The user has enter the login site by inputting their login credentials
-        id = request.POST.get('id') #Get the inut id
-        password = request.POST.get ('password') #Get the input password
-        if authenticate_user(id, password): #CHeck that the user exists in the database
-            user_information = get_user_info(id, password) #Get the name and access of the user
-            request.session['username'] = user_information['username'] #Create a session variable for their name
-            request.session['access'] = user_information['access'] #Create a session variable for their access
+def viewcustomers(request):
 
-    if 'user' in request.GET:
-            customer = get_user_info()#Retrieve all the user information, from functions.py
-            context = {'list_of_users': users}
-	return render(request, 'vroom/view_customer.html', context)
+    users = get_all_customers()#Retrieve all the user information, from functions.py
+    context = {'list_of_users': users}
+
+    return render(request, 'vroom/viewcustomers.html', context)
 
 
 def login(request):

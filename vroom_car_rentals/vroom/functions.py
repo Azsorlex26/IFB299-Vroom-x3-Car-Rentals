@@ -20,11 +20,19 @@ def get_all_orders():
     return orders
 
 def get_all_stores():
-    # Retrieves all informmation about stores
+    # Retrieves all information about stores
 
     stores = Store.objects.all()
 
     return stores
+
+def get_all_customers():
+    # Retrieves all information about customers
+
+    customers = User.objects.all()
+
+    return customers
+
 
 def authenticate_user(check_id, check_password):
     # Checks to see if the user exists in the database

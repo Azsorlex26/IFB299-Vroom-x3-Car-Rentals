@@ -9,7 +9,7 @@
                 <li><a href="{% url 'vroom:stores' %}">Stores</a></li>
                 {% if request.session.username != None %}
                 {% if request.session.access == "GENERAL_STAFF" %}
-                <li><a href="#">Customers</a></li>
+                <li><a href="{% url 'vroom:viewcustomers' %}">Customers</a></li>
                 <li><a href="{% url 'vroom:storehistory' %}">Rental History</a></li>
                 {% else %} <!--For users-->
                 <!-- Not Yet Implemented (For Sprint 2) <li><a href="#">Rental History</a></li> -->
