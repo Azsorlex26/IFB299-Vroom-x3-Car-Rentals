@@ -23,6 +23,7 @@
         </form>
     </section>
     <!-- this here is for the return of the search -->
+    {% if request.session.access == 'GENERAL_STAFF' %} <!-- Check if the user is a member of staff -->
     <div class="sub-cont results">
         {% if list_of_user != None %}
         <h3>Results</h3>
