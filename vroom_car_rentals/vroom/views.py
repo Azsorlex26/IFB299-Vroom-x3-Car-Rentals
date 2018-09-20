@@ -75,12 +75,22 @@ def cars(request):
 		
     return render(request, 'vroom/cars.html', context)
 
+
 def viewcustomers(request):
 
     users = get_all_customers()#Retrieve all the user information, from functions.py
+
+    if 'search' in request.GET:
+        filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the users retrieved
+        users = users.filter(name__icontains=filter) # Filter the users so that only ones with a similar model name appear
+
+    else:
+        users = users.filter(name__icontains='')
+
     context = {'list_of_users': users}
 
     return render(request, 'vroom/viewcustomers.html', context)
+
 
 
 def login(request):
