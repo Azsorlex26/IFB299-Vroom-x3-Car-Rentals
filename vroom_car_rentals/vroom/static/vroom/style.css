@@ -35,6 +35,9 @@ header h1 {
     min-width: 0;
 }
 
+.main-cont h2 {
+    cursor: default;
+}
 
 /*----------------------------------------------------------------------------*/
 /* Content flow for tablet view */
@@ -327,10 +330,24 @@ footer p {
     background-color: var(--blue);
 }
 
+#sortBy {
+    padding-left: 125px;
+    cursor: default;
+}
+
+#sortBy strong {
+    padding-left: 45px;
+}
+
 #filters {
     padding-top: 5px;
     border: 0;
     font-family: 'Lato', sans-serif;
+    cursor: default;
+}
+
+#sortBy input[type=radio], #sortBy select, #filters select {
+    cursor: pointer;
 }
 
 .search-heading {
@@ -346,6 +363,7 @@ footer p {
     flex-flow: column;
     justify-content: center;
     text-align: center;
+    cursor: default;
     margin: 0 5% !important;
 }
 
@@ -353,9 +371,6 @@ table {
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 10px;
-}
-
-tbody {
 }
 
 tr {
