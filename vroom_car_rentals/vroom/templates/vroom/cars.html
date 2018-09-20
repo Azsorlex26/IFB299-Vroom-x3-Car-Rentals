@@ -19,21 +19,10 @@
 		document.getElementById("price_high").disabled=true;
 		document.getElementById("power_high").disabled=true;
 
-
-		if (value == 'tank'){
-			document.getElementById("tank_high").style.visibility = "visible";
-			document.getElementById("tank_high").disabled=false;
-		}
-		
-		else if (value == 'price'){
-			document.getElementById("price_high").style.visibility = "visible";
-			document.getElementById("price_high").disabled=false;
-		}
-		
-		else if (value == 'power'){
-			document.getElementById("power_high").style.visibility = "visible";
-			document.getElementById("power_high").disabled=false;
-		}
+		if (value != '') {
+            document.getElementById(value).style.visibility = "visible";
+		    document.getElementById(value).disabled=false;
+        }
 	}
 </script>
 
@@ -49,29 +38,29 @@
             </div>
 			
 			<div id="sortBy">
-				<strong>Sort By: </strong><br>
-				<input type="radio" name="sort" value="none" onclick="hide_drop('none');"> Default <br>
-				<input type="radio" name="sort" value="Car_TankCapacity" onclick="hide_drop('tank');"> Tank Capacity
-				<select name="tank_high" id="tank_high" style="visibility:hidden" >
+				<strong>Sort By:</strong><br>
+				<input type="radio" name="sort" value="none" onclick="hide_drop('');"> Default<br>
+				<input type="radio" name="sort" value="Car_TankCapacity" onclick="hide_drop('tank_high');"> Tank Capacity
+                
+                <select name="tank_high" id="tank_high" style="visibility:hidden" >
                     <option value="high">Highest to Lowest</option>
 					<option value="low">Lowest to Highest</option>
 				</select>
 				<br>
 				
-				<input type="radio" name="sort" value="Price_New" onclick="hide_drop('price');"> Price
+				<input type="radio" name="sort" value="Price_New" onclick="hide_drop('price_high');"> Price
 				<select name="price_high" id="price_high" style="visibility:hidden">
 					<option value="low">Lowest to Highest</option>
 					<option value="high">Highest to Lowest</option>
 				</select>
 				<br>
 				
-				<input type="radio" name="sort" value="Power" onclick="hide_drop('power');"> Power
+				<input type="radio" name="sort" value="Power" onclick="hide_drop('power_high');"> Power
 				<select name="power_high" id="power_high" style="visibility:hidden">
 					<option value="high">Highest to Lowest</option>
 					<option value="low">Lowest to Highest</option>
 				</select>
 				<br>
-				
 			</div>
 			<script type="text/javascript"> onload();</script>
 			
