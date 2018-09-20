@@ -8,8 +8,8 @@ def index(request):
 def cars(request):
     cars = get_all_cars() # Retrieve all the cars and the relevant information (from functions.py)
     stores = Store.objects.values('name') # Retrieves the names of the stores
-    make_name = Car.objects.values('make_name').order_by('make_name').distinct()
-    seriesYear = Car.objects.values('seriesYear').order_by('seriesYear').distinct()
+    make_name = Car.objects.values('make_name').order_by('make_name').distinct() # Retrieves all makes of cars from the database
+    seriesYear = Car.objects.values('seriesYear').order_by('seriesYear').distinct() # Retrieves the years stored in the database
     fuel_system = Car.objects.values('fuel_system').order_by('fuel_system').distinct()
     drive = Car.objects.values('drive').order_by('drive').distinct()
     context = {'list_of_cars': cars, 'stores': stores, 'make_name': make_name, 'seriesYear': seriesYear, 'fuel_system': fuel_system, 'drive': drive} # Create a context dictionary that contains the retrieved cars and stores
@@ -43,13 +43,13 @@ def cars(request):
             cars = cars.filter(return_store__name=request.GET.get('store'))
             filter_names.append(request.GET.get('store'))
 
-        if 'make_name' in request.GET and request.GET.get('make_name') != "":
-            cars = cars.filter(car__make_name__contains=request.GET.get('make_name'))
-            filter_names.append(request.GET.get('make_name'))
+        if 'make_name' in request.GET and request.GET.get('make_name') != "": # Apply the make filter if it is used when searching
+            cars = cars.filter(car__make_name__contains=request.GET.get('make_name')) # Filter the data to only show cars of the searched make name
+            filter_names.append(request.GET.get('make_name')) # Add filter to list of selected filters
 		
-        if 'year' in request.GET and request.GET.get('year') != "":
-            cars = cars.filter(car__seriesYear=request.GET.get('year'))
-            filter_names.append(int(request.GET.get('year')))
+        if 'year' in request.GET and request.GET.get('year') != "": # Apply the year filter if it is used when searching
+            cars = cars.filter(car__seriesYear=request.GET.get('year')) # Filter the data to only show cars of the searched year
+            filter_names.append(int(request.GET.get('year'))) # Add filter to list of selected filters
 
         if 'fuel_system' in request.GET and request.GET.get('fuel_system') != "":
             cars = cars.filter(car__fuel_system=request.GET.get('fuel_system'))
