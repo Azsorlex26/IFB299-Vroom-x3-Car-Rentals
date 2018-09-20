@@ -11,20 +11,16 @@
             <div id="main-search">
                 <input type="search" name="search" id="search-text" placeholder="Enter a name" />
                 <input type="submit" id="search-btn" value="Search"/>
-                <select name="ordering">
-                    <option disabled selected value>Order by: </option>
-                    <option value="store">Store</option>
-                </select>
             </div>
         </form>
     </section>
     <!-- this here is for the return of the search -->
     <div class="sub-cont results">
         {% if request.session.access == 'GENERAL_STAFF' %} <!-- Check if the user is a member of staff -->
-            {% if list_of_user != None %}
+            {% if list_of_users != None %}
                 <h3>Results</h3>
                 <!--List of search results-->
-                {% if not list_of_user %}
+                {% if not list_of_users %}
                 <p>Oops. We couldn't find any customers matching your search</p>
                 {% else %}
                 <table>
@@ -40,12 +36,12 @@
                             
                         </tr>
                         {%for item in list_of_users%}
-                        <td>{{item.user.user_id}}</td>
-                        <td>{{item.user.name}}</td>
-                        <td>{{item.user.phone}}</td>
-                        <td>{{item.user.address}}</td>
-                        <td>{{item.user.birthday}}</td>
-                        <td>{{item.user.role}}</td>
+                        <td>{{item.user_id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.phone}}</td>
+                        <td>{{item.address}}</td>
+                        <td>{{item.birthday}}</td>
+                        <td>{{item.role}}</td>
                         {% endfor %}
                     </tbody>
                 </table>
