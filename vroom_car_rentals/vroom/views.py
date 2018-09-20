@@ -23,7 +23,7 @@ def cars(request):
         if 'sort' in request.GET: # Sort the Results by Tank Capacity and determine sort input
             if request.GET.get('sort') == "Car_TankCapacity":
                 context['sort'] = 'tank_high' # Set field to sort by to tank_high
-                if request.GET.get('tank_high') == "high": #Sort By highest to lowest
+                if request.GET.get('tank_high') == "high": # Sort By highest to lowest
                     cars = cars.extra({'tank_capacity':"tank_capacity + 0"}).order_by('-tank_capacity')
                 else: # Sort By Lowest to highest
                     cars = cars.extra({'tank_capacity':"tank_capacity + 0"}).order_by('tank_capacity')

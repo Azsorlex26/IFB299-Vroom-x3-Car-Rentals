@@ -18,7 +18,7 @@
 		document.getElementById("power_high").disabled = true;
 
 		if (value != null) {
-            document.getElementById(value).checked = true;
+            document.getElementById(value).checked = true; //The culprit
             document.getElementById(value).style.visibility = "visible";
 		    document.getElementById(value).disabled = false;
         }
