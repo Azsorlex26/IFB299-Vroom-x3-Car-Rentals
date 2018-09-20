@@ -33,3 +33,4 @@ vroom_car_rentals/vroom/__pycache__/apps.cpython-37.pyc
 vroom_car_rentals/vroom/__pycache__/admin.cpython-37.pyc
 vroom_car_rentals/vroom/__pycache__/__init__.cpython-37.pyc
 *.pyc
+*.pyc
