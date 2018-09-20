@@ -38,40 +38,40 @@
 			
 			<div id="sortBy">
 				<strong>Sort By:</strong><br>
-				<input type="radio" name="sort" value="" onclick="hide_drop(null);"> Default<br>
+				<input type="radio" name="sort" value="" onclick="hide_drop(null);" checked> Default<br>
 				<input type="radio" name="sort" id="tank_high_radio" value="Car_TankCapacity" onclick="hide_drop('tank_high');"> Tank Capacity
                 
                 <select name="tank_high" id="tank_high">
-                    {% if "high" in filter_names %}
+                    {% if "low" in filter_names %}
                     <option value="high">Highest to Lowest</option>
-                    <option value="low">Lowest to Highest</option>
+                    <option value="low" selected>Lowest to Highest</option>
                     {% else %}
+                    <option value="high" selected>Highest to Lowest</option>
                     <option value="low">Lowest to Highest</option>
-                    <option value="high">Highest to Lowest</option>
                     {% endif %}
 				</select>
 				<br>
 				
 				<input type="radio" name="sort" id="price_high_radio" value="Price_New" onclick="hide_drop('price_high');"> Price
 				<select name="price_high" id="price_high">
-                    {% if "high" in filter_names %}
+                    {% if "low" in filter_names %}
                     <option value="high">Highest to Lowest</option>
-                    <option value="low">Lowest to Highest</option>
+                    <option value="low" selected>Lowest to Highest</option>
                     {% else %}
+                    <option value="high" selected>Highest to Lowest</option>
                     <option value="low">Lowest to Highest</option>
-                    <option value="high">Highest to Lowest</option>
                     {% endif %}
 				</select>
 				<br>
 				
 				<input type="radio" name="sort" id="power_high_radio" value="Power" onclick="hide_drop('power_high');"> Power
 				<select name="power_high" id="power_high">
-                    {% if "high" in filter_names %}
+                    {% if "low" in filter_names %}
                     <option value="high">Highest to Lowest</option>
-                    <option value="low">Lowest to Highest</option>
+                    <option value="low" selected>Lowest to Highest</option>
                     {% else %}
+                    <option value="high" selected>Highest to Lowest</option>
                     <option value="low">Lowest to Highest</option>
-                    <option value="high">Highest to Lowest</option>
                     {% endif %}
 				</select>
                 <br>
