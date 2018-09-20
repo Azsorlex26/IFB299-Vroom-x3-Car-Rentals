@@ -53,7 +53,7 @@ def cars(request):
             filter_names.append(request.GET.get('store'))
 
         if 'make_name' in request.GET and request.GET.get('make_name') != "": # Apply the make filter if it is used when searching
-            cars = cars.filter(car__make_name__contains=request.GET.get('make_name')) # Filter the data to only show cars of the searched make name
+            cars = cars.filter(car__make_name=request.GET.get('make_name')) # Filter the data to only show cars of the searched make name
             filter_names.append(request.GET.get('make_name')) # Add filter to list of selected filters
 		
         if 'year' in request.GET and request.GET.get('year') != "": # Apply the year filter if it is used when searching
