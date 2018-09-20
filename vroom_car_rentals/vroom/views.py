@@ -86,7 +86,7 @@ def view_customers(request):
 
     if 'user' in request.GET:
             customer = get_user_info()#Retrieve all the user information, from functions.py
-            context = {'list_of_users': users)
+            context = {'list_of_users': users}
 
 def login(request):
     if 'id' in request.POST and 'password' in request.POST: # The user has entered the login site by entering their login details
