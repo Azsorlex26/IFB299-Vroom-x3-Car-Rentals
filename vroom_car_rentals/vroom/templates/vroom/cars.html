@@ -70,9 +70,9 @@
                     <option value="">Store:</option>
                     {% for item in stores %}
                     {% if not item.name in filter_names %}
-                    <option value={{ item.name }}>{{ item.name }}</option>
+                    <option value="{{ item.name }}">{{ item.name }}</option>
                     {% else %}
-                    <option value={{ item.name }} selected>{{ item.name }}</option>
+                    <option value="{{ item.name }}" selected>{{ item.name }}</option>
                     {% endif %}
                     {% endfor %}
                 </select>
