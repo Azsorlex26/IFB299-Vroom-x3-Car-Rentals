@@ -23,20 +23,23 @@ def cars(request):
         if 'sort' in request.GET: # Sort the Results by Tank Capacity and determine sort input
             if request.GET.get('sort') == "Car_TankCapacity":
                 context['sort'] = 'tank_high' # Set field to sort by to tank_high
+                filter_names.append(request.GET.get('tank_high')) # Remember which drop-down item was used
                 if request.GET.get('tank_high') == "high": # Sort By highest to lowest
                     cars = cars.extra({'tank_capacity':"tank_capacity + 0"}).order_by('-tank_capacity')
                 else: # Sort By Lowest to highest
                     cars = cars.extra({'tank_capacity':"tank_capacity + 0"}).order_by('tank_capacity')
-					
+
             elif request.GET.get('sort') == "Price_New": # Sort the Results by Price and determine sort input
                 context['sort'] = 'price_high' # Set field to sort by to price_high
+                filter_names.append(request.GET.get('price_high'))
                 if request.GET.get('price_high') == "high": # Sort from highest to lowest
                     cars = cars.order_by('-car__price_new')
                 else: # Sort from lowest to highest
                     cars = cars.order_by('car__price_new')
-					
+
             elif request.GET.get('sort') == "Power": # Sort the Results by Power and determine sort input
                 context['sort'] = 'power_high' # Set field to sort by to power_high
+                filter_names.append(request.GET.get('power_high'))
                 if request.GET.get('power_high') == "high": # Sort from highest to lowest
                     cars = cars.extra({'power':"power + 0"}).order_by('-power')
                 else: # Sort from lowest to highest
@@ -62,9 +65,13 @@ def cars(request):
             cars = cars.filter(car__drive=request.GET.get('drive')) # Filter the data to only show cars of the searched drive type
             filter_names.append(request.GET.get('drive')) # Add filter to the list of selected filters
 
-        context['list_of_cars'] = cars # Update the context with new results
         if len(filter_names) > 0:
             context['filter_names'] = filter_names
+    
+    else:
+        cars = cars.filter(car__model__icontains='')
+
+    context['list_of_cars'] = cars # Update the context with new results
 		
     return render(request, 'vroom/cars.html', context)
 
