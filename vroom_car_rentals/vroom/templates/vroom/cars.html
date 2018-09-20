@@ -18,7 +18,7 @@
 		document.getElementById("power_high").disabled = true;
 
 		if (value != null) {
-            document.getElementById(value).checked = true; //The culprit
+            document.getElementById(value + "_radio").checked = true;
             document.getElementById(value).style.visibility = "visible";
 		    document.getElementById(value).disabled = false;
         }
@@ -39,25 +39,40 @@
 			<div id="sortBy">
 				<strong>Sort By:</strong><br>
 				<input type="radio" name="sort" value="" onclick="hide_drop(null);"> Default<br>
-				<input type="radio" name="sort" value="Car_TankCapacity" onclick="hide_drop('tank_high');"> Tank Capacity
+				<input type="radio" name="sort" id="tank_high_radio" value="Car_TankCapacity" onclick="hide_drop('tank_high');"> Tank Capacity
                 
-                <select name="tank_high" id="tank_high" style="visibility:hidden" >
+                <select name="tank_high" id="tank_high">
+                    {% if "high" in filter_names %}
                     <option value="high">Highest to Lowest</option>
-					<option value="low">Lowest to Highest</option>
+                    <option value="low">Lowest to Highest</option>
+                    {% else %}
+                    <option value="low">Lowest to Highest</option>
+                    <option value="high">Highest to Lowest</option>
+                    {% endif %}
 				</select>
 				<br>
 				
-				<input type="radio" name="sort" value="Price_New" onclick="hide_drop('price_high');"> Price
-				<select name="price_high" id="price_high" style="visibility:hidden">
-					<option value="low">Lowest to Highest</option>
-					<option value="high">Highest to Lowest</option>
+				<input type="radio" name="sort" id="price_high_radio" value="Price_New" onclick="hide_drop('price_high');"> Price
+				<select name="price_high" id="price_high">
+                    {% if "high" in filter_names %}
+                    <option value="high">Highest to Lowest</option>
+                    <option value="low">Lowest to Highest</option>
+                    {% else %}
+                    <option value="low">Lowest to Highest</option>
+                    <option value="high">Highest to Lowest</option>
+                    {% endif %}
 				</select>
 				<br>
 				
-				<input type="radio" name="sort" value="Power" onclick="hide_drop('power_high');"> Power
-				<select name="power_high" id="power_high" style="visibility:hidden">
-					<option value="high">Highest to Lowest</option>
-					<option value="low">Lowest to Highest</option>
+				<input type="radio" name="sort" id="power_high_radio" value="Power" onclick="hide_drop('power_high');"> Power
+				<select name="power_high" id="power_high">
+                    {% if "high" in filter_names %}
+                    <option value="high">Highest to Lowest</option>
+                    <option value="low">Lowest to Highest</option>
+                    {% else %}
+                    <option value="low">Lowest to Highest</option>
+                    <option value="high">Highest to Lowest</option>
+                    {% endif %}
 				</select>
                 <br>
 			</div>
