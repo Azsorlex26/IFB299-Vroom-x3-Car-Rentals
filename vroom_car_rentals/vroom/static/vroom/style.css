@@ -9,6 +9,7 @@
     --yellow: #DEF735;
     --orange: #FDC437;
     --red: #eb4a24;
+    --dark-grey: #dee2e2;
 }
 
 /* Styles for mobile / tablets */
@@ -188,13 +189,13 @@ main {
 .main-cont h2 {
     font-size: 30px;
     margin: 0;
-    color: var(--black);
+    color: var(--white);
 }
 
 .main-cont p {
     font-size: 20px;
     margin: 0;
-    color: var(--black);
+    color: var(--white);
 }
 
 #index-form {
