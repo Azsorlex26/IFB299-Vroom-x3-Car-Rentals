@@ -281,7 +281,7 @@ footer p {
 */
 /*==========Styles for search.html==========*/
 
-#cars-form {
+#cars-form, #user-form {
     display: flex;
     flex-flow: column;
     align-items: center;
