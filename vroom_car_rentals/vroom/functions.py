@@ -5,7 +5,7 @@ def get_all_cars():
     # Retrieves all information about cars as well as the store they are in (the last store they were dropped off to in orders)
 
     # Sub query used to retrieve the most recent order id for a car (LIMIT 1 ensures only 1 value is returned)
-    recent_order_per_car = 'vroom_order.order_id = (SELECT g.order_id FROM vroom_order g WHERE g.car_id = vroom_order.car_id ORDER BY g.return_date LIMIT 1)'
+    recent_order_per_car = 'vroom_order.order_id = (SELECT g.order_id FROM vroom_order g WHERE g.car_id = vroom_order.car_id ORDER BY g.return_date DESC LIMIT 1)'
 
     # Join the order, car and store tables on the car_id = car_id and return_store_id = store_id
     cars = Order.objects.select_related('car', 'return_store')
