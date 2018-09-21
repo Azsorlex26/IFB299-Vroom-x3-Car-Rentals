@@ -12,11 +12,12 @@ def cars(request):
     seriesYear = Car.objects.values('seriesYear').order_by('seriesYear').distinct() # Retrieves the years stored in the database
     fuel_system = Car.objects.values('fuel_system').order_by('fuel_system').distinct() # Retrieves the fuel systems stored in the database
     drive = Car.objects.values('drive').order_by('drive').distinct() # Retrieves the drive types stored in the database
-    context = {'list_of_cars': cars, 'stores': stores, 'make_name': make_name, 'seriesYear': seriesYear, 'fuel_system': fuel_system, 'drive': drive} # Create a context dictionary that contains the retrieved cars and information used in filters
+    filter = '' # Declare a string that'll be used for getting results by name
+    context = {'list_of_cars': cars, 'filter': filter, 'stores': stores, 'make_name': make_name, 'seriesYear': seriesYear, 'fuel_system': fuel_system, 'drive': drive} # Create a context dictionary that contains the retrieved cars and information used in filters
     
     if 'search' in request.GET: # The user has entered the cars page via the home site search or the cars page search bar
         filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the cars retrieved
-        cars = cars.filter(car__model__icontains=filter) # Filter the cars so that only ones with a similar model name appear
+        context['filter'] = filter # Update the context
 
         filter_names = list() # Create a list to store the currently selected filter values
 	
@@ -67,10 +68,8 @@ def cars(request):
 
         if len(filter_names) > 0:
             context['filter_names'] = filter_names
-    
-    else:
-        cars = cars.filter(car__model__icontains='')
 
+    cars = cars.filter(car__model__icontains=filter) # Filter the cars so that only ones with a similar model name appear
     context['list_of_cars'] = cars # Update the context with new results
 		
     return render(request, 'vroom/cars.html', context)
@@ -80,12 +79,11 @@ def viewcustomers(request):
 
     if 'search' in request.GET:
         filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the users retrieved
-        users = users.filter(name__icontains=filter) # Filter the users so that only ones with a similar model name appear
-
     else:
-        users = users.filter(name__icontains='')
+        filter = ''
 
-    context = {'list_of_users': users}
+    users = users.filter(name__icontains=filter) # Filter the users so that only ones with a similar model name appear
+    context = {'list_of_users': users, 'filter': filter}
 
     return render(request, 'vroom/viewcustomers.html', context)
 

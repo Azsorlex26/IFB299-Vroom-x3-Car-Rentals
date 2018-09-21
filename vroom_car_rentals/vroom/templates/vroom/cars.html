@@ -32,7 +32,11 @@
         <h2 class="search-heading">Search</h2>
         <form id="cars-form" name="searchForm" method="GET" action="{% url 'vroom:cars' %}">
             <div id="main-search">
+                {% if filter == '' %}
                 <input type="search" name="search" id="search-text" placeholder="Enter a name" />
+                {% else %}
+                <input type="search" name="search" id="search-text" placeholder="Enter a name" value={{ filter }} />
+                {% endif %}
                 <input type="submit" id="search-btn" value="Search"/>
             </div>
 			
