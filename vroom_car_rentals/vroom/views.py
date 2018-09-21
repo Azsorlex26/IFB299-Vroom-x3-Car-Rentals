@@ -75,10 +75,8 @@ def cars(request):
 		
     return render(request, 'vroom/cars.html', context)
 
-
 def viewcustomers(request):
-
-    users = get_all_customers()#Retrieve all the user information, from functions.py
+    users = get_all_customers() # Retrieve all the user information, from functions.py
 
     if 'search' in request.GET:
         filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the users retrieved
@@ -90,8 +88,6 @@ def viewcustomers(request):
     context = {'list_of_users': users}
 
     return render(request, 'vroom/viewcustomers.html', context)
-
-
 
 def login(request):
     if 'id' in request.POST and 'password' in request.POST: # The user has entered the login site by entering their login details

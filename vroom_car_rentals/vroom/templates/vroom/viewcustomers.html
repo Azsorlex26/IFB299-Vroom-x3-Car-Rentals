@@ -17,35 +17,34 @@
     <!-- this here is for the return of the search -->
     <div class="sub-cont results">
         {% if request.session.access == 'GENERAL_STAFF' %} <!-- Check if the user is a member of staff -->
-            {% if list_of_users != None %}
-                <h3>Results</h3>
-                <!--List of search results-->
-                {% if not list_of_users %}
-                <p>Oops. We couldn't find any customers matching your search</p>
-                {% else %}
-                <table>
-                    <tbody>
-                        <tr>
+            <h3>Results</h3>
+            <!--List of search results-->
+            {% if not list_of_users %}
+            <p>Oops. We couldn't find any customers matching your search</p>
+            {% else %}
+            <table>
+                <tbody>
+                    <tr>
+                        <th>user_id</th>
+                        <th>name</th>
+                        <th>phone</th>
+                        <th>address</th>
+                        <th>birthday</th>
+                        <th>role</th>
+                    </tr>
 
-                            <th>user_id</th>
-                            <th>name</th>
-                            <th>phone</th>
-                            <th>address</th>
-                            <th>birthday</th>
-                            <th>role</th>
-                            
-                        </tr>
-                        {%for item in list_of_users%}
+                    {% for item in list_of_users %}
+                    <tr>
                         <td>{{item.user_id}}</td>
                         <td>{{item.name}}</td>
                         <td>{{item.phone}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.birthday}}</td>
                         <td>{{item.role}}</td>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
             {% endif %}
         {% else %}
         <h2>Staff Only Information - Please Login to Continue</h2>
