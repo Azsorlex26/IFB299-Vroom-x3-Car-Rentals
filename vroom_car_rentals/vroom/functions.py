@@ -4,11 +4,14 @@ from django.db.models import Max
 def get_all_cars():
     # Retrieves all information about cars as well as the store they are in (the last store they were dropped off to in orders)
 
-    # Select all most recent dates for each car
-    dates = Order.objects.values('car').annotate(max_date=Max('return_date')).values('max_date')
+    # Sub query used to retrieve the most recent order id for a car (LIMIT 1 ensures only 1 value is returned)
+    recent_order_per_car = 'vroom_order.order_id = (SELECT g.order_id FROM vroom_order g WHERE g.car_id = vroom_order.car_id ORDER BY g.return_date LIMIT 1)'
 
-    # Join the order, car and store tables on the car_id = car_id and return_store_id = store_id, also filter so that only each cars most recent entry is displayed
-    cars = Order.objects.select_related('car', 'return_store').filter(return_date__in=dates)
+    # Join the order, car and store tables on the car_id = car_id and return_store_id = store_id
+    cars = Order.objects.select_related('car', 'return_store')
+
+    # Filter the results so each car is unique
+    cars = cars.extra(where={recent_order_per_car})
 
     return cars
 
