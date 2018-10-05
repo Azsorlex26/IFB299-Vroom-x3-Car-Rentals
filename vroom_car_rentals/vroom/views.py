@@ -96,14 +96,14 @@ def login(request):
 
             request.session['username'] = user_information['username'] # Create a session variable for their name
             request.session['access'] = user_information['access'] # Create a session variable for their access
+            request.session['id'] = id # Create a session variable for their id
 
             return redirect('vroom:index') # Redirect the user back to the home page
         else: # The users information was not found in the database
             context = {'id': id, 'password': password} # Create a context of the information they sent
 
             return render(request, 'vroom/log-in.html', context) # Render the login page again (will now have their details auto-filled and a message)
-    else: # This is the first time they are accessing the login page
-        return render(request, 'vroom/log-in.html') # Render the login page for the first time
+    return render(request, 'vroom/log-in.html') # Render the login page for the first time
 
 def logout(request):
     if request.session['username'] and request.session['access']: # Make sure the session variables are created
@@ -122,14 +122,17 @@ def stores(request):
 def storehistory(request):
     stores = get_all_stores() # Retrieve all the store information (from functions.py)
     context = {'list_of_stores': stores}
-
     if 'store' in request.GET:
         orders = get_all_orders() # Retrive all the order information (from functions.py)
         selected_store_id = int(request.GET.get('store')) # Retrieve the selected store from the html form
         for store in stores:
-            if (store.store_id == selected_store_id): # If the store id is the same as the selected store, overide the store name to equal that of the selected store
+            if store.store_id == selected_store_id: # If the store id is the same as the selected store, overide the store name to equal that of the selected store
                 selected_store_name = store.name
+                break
+        context = {'list_of_orders': orders, 'list_of_stores': stores, 'selected_store_name': selected_store_name, 'selected_store_id': selected_store_id}
 
-        context = {'list_of_orders': orders, 'list_of_stores': stores, 'selected_store_id': selected_store_id, 'selected_store_name': selected_store_name}
+        if request.session['access'] == "CUSTOMER":
+            orders.filter(customer__user_id=request.session['id'])
+            context['list_of_orders'] = orders
 
     return render(request, 'vroom/storehistory.html', context) # Render the store history page with context

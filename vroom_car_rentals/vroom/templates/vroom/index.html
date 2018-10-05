@@ -25,11 +25,7 @@
         </article>
         <article>
             {% if request.session.username != None %} <!--Only link when a user is logged in-->
-            {% if request.session.access == "GENERAL_STAFF" %}
-            <a href="{% url 'vroom:storehistory' %}"> <!--Go to the staff page if a staff member is logged on-->
-            {% else %}
-            <a href="#"> <!--Go to the user page if a user is logged on-->
-            {% endif %}
+            <a href="{% url 'vroom:storehistory' %}"> <!--Go to the rentalhistory page-->
             {% endif %}
                 <img src="{% static 'vroom/images/history-blue.png' %}" alt="" />
                 <h3 style="color: var(--blue)">Rental History</h3>

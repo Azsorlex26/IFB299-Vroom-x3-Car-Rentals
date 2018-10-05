@@ -26,78 +26,74 @@
         </div>
     </section>
     <!--Second section which contains the less important information but is still useful-->
-    <div class="sub-cont results">
-        <!--List of search results-->
-        {% if request.session.access == 'GENERAL_STAFF' %} <!-- Check if the user is a member of staff -->
-            {% if 'store' in request.GET %} <!-- If the user has already submitted a search -->
-            <div class="store-box">
-                <h2>Store ID: {{ selected_store_id }}</h3>
-                <h2>Store Name: {{ selected_store_name }}</h3>
-                <h3>Pickup Orders</h4> <!--Display Pickup Orders Table-->
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Creation Date</th>
-                            <th>Pickup Date</th>
-                            <th>Return Date</th>
-                            <th>Car ID</th>
-                            <th>Customer ID</th>
-                            <th>Pickup Store ID</th>
-                            <th>Return Store ID</th>
-                        </tr>
-                        {% for item in list_of_orders %} <!--For Each order in the list of orders-->
-                        {% if selected_store_id == item.pickup_store_id %} <!--If the Store ID matches the Pickup Store ID in the order-->
-                            <tr>
-                                <td>{{ item.order_id }}</td>
-                                <td>{{ item.create_date }}</td>
-                                <td>{{ item.pickup_date }}</td>
-                                <td>{{ item.return_date }}</td>
-                                <td>{{ item.car_id }}</td>
-                                <td>{{ item.customer_id }}</td>
-                                <td>{{ item.pickup_store_id }}</td>
-                                <td>{{ item.return_store_id }}</td>
-                            </tr>
-                        {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <h3>Return Orders</h4> <!--Display the Return Orders Table-->
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Creation Date</th>
-                            <th>Pickup Date</th>
-                            <th>Return Date</th>
-                            <th>Car ID</th>
-                            <th>Customer ID</th>
-                            <th>Pickup Store ID</th>
-                            <th>Return Store ID</th>
-                        </tr>
-                        {% for item in list_of_orders %} <!--For Each order in the list of orders-->
-                        {% if selected_store_id == item.return_store_id %} <!--If the Store ID matches the Return Store ID-->
-                            <tr>
-                                <td>{{ item.order_id }}</td>
-                                <td>{{ item.create_date }}</td>
-                                <td>{{ item.pickup_date }}</td>
-                                <td>{{ item.return_date }}</td>
-                                <td>{{ item.car_id }}</td>
-                                <td>{{ item.customer_id }}</td>
-                                <td>{{ item.pickup_store_id }}</td>
-                                <td>{{ item.return_store_id }}</td>
-                            </tr>
-                        {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <br><br>
-            </div>
-            {% else %} <!-- Else the user has only just visited the page and is prompted to select a store-->
-            <h2>Please Select A Store</h2>
-            {% endif %}
-        {% else %} <!-- Else the user is not logged in as staff and should not have access to this information -->
-        <h2>Staff Only Information - Please Login to Continue</h2>
+    <div class="sub-cont results"> <!--List of search results-->
+        {% if 'store' in request.GET %} <!-- If the user has already submitted a search -->
+        <div class="store-box">
+            <h2>Store ID: {{ selected_store_id }}</h2>
+            <h2>Store Name: {{ selected_store_name }}</h2>
+            <h3>Pickup Orders</h3> <!--Display Pickup Orders Table-->
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Creation Date</th>
+                        <th>Pickup Date</th>
+                        <th>Return Date</th>
+                        <th>Car ID</th>
+                        <th>Customer ID</th>
+                        <th>Pickup Store ID</th>
+                        <th>Return Store ID</th>
+                    </tr>
+                    {% for item in list_of_orders %}<!--For Each order in the list of orders-->
+                    <!--If the Store ID matches the Pickup Store ID in the order-->
+                    {% if selected_store_id == item.pickup_store_id %}
+                    <tr>
+                        <td>{{ item.order_id }}</td>
+                        <td>{{ item.create_date }}</td>
+                        <td>{{ item.pickup_date }}</td>
+                        <td>{{ item.return_date }}</td>
+                        <td>{{ item.car_id }}</td>
+                        <td>{{ item.customer_id }}</td>
+                        <td>{{ item.pickup_store_id }}</td>
+                        <td>{{ item.return_store_id }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3>Return Orders</h3> <!--Display the Return Orders Table-->
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Creation Date</th>
+                        <th>Pickup Date</th>
+                        <th>Return Date</th>
+                        <th>Car ID</th>
+                        <th>Customer ID</th>
+                        <th>Pickup Store ID</th>
+                        <th>Return Store ID</th>
+                    </tr>
+                    {% for item in list_of_orders %} <!--For Each order in the list of orders-->
+                    {% if selected_store_id == item.return_store_id %} <!--If the Store ID matches the Return Store ID-->
+                    <tr>
+                        <td>{{ item.order_id }}</td>
+                        <td>{{ item.create_date }}</td>
+                        <td>{{ item.pickup_date }}</td>
+                        <td>{{ item.return_date }}</td>
+                        <td>{{ item.car_id }}</td>
+                        <td>{{ item.customer_id }}</td>
+                        <td>{{ item.pickup_store_id }}</td>
+                        <td>{{ item.return_store_id }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br><br>
+        </div>
+        {% else %} <!-- Else the user has only just visited the page and is prompted to select a store-->
+        <h2>Please Select A Store</h2>
         {% endif %}
     </div>
 </main>

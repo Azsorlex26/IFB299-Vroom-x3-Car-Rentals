@@ -36,7 +36,6 @@ def get_all_customers():
 
     return customers
 
-
 def authenticate_user(check_id, check_password):
     # Checks to see if the user exists in the database
 
@@ -49,7 +48,7 @@ def get_user_info(check_id, check_password):
 
     users = get_user(check_id, check_password);
 
-    user = users[0] # Only take the first instance (okay to do since we are retrieving users by a specific id [the primary key] so their can only be 1)
+    user = users[0] # Only take the first instance (okay to do since we are retrieving users by a specific id [the primary key] so there can only be 1)
 
     access = Role.objects.filter(role_id=user.role_id) # Get the access object for the user
 
