@@ -99,10 +99,10 @@ def login(request):
             request.session['id'] = id # Create a session variable for their id
 
             return redirect('vroom:index') # Redirect the user back to the home page
-        else: # The users information was not found in the database
-            context = {'id': id, 'password': password} # Create a context of the information they sent
 
-            return render(request, 'vroom/log-in.html', context) # Render the login page again (will now have their details auto-filled and a message)
+        context = {'id': id, 'password': password} # The users information was not found in the database
+        return render(request, 'vroom/log-in.html', context) # Render the login page again (will now have their details auto-filled and a message)
+    
     return render(request, 'vroom/log-in.html') # Render the login page for the first time
 
 def logout(request):
@@ -132,7 +132,7 @@ def storehistory(request):
         context = {'list_of_orders': orders, 'list_of_stores': stores, 'selected_store_name': selected_store_name, 'selected_store_id': selected_store_id}
 
         if request.session['access'] == "CUSTOMER":
-            orders.filter(customer__user_id=request.session['id'])
+            orders = orders.filter(customer__user_id=request.session['id'])
             context['list_of_orders'] = orders
 
     return render(request, 'vroom/storehistory.html', context) # Render the store history page with context
