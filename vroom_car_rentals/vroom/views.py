@@ -125,20 +125,22 @@ def storehistory(request):
     if 'store' in request.GET:
         orders = get_all_orders() # Retrive all the order information (from functions.py)
         selected_store_id = int(request.GET.get('store')) # Retrieve the selected store from the html form
+        pickup_stores = orders.filter(pickup_store=selected_store_id)
+        return_stores = orders.filter(return_store=selected_store_id)
         for store in stores:
             if store.store_id == selected_store_id: # If the store id is the same as the selected store, overide the store name to equal that of the selected store
                 selected_store_name = store.name
                 break
-        context = {
-            'list_of_orders': orders,
-            'list_of_stores': stores,
-            'selected_store_name': selected_store_name,
-            'selected_store_id': selected_store_id,
-            'table_data': {'Pickup Orders': 'pickup_store_id', 'Return Orders': 'return_store_id'}, # Used for simplifying the code in storehistory.html
-        }
 
         if request.session['access'] == "CUSTOMER":
-            orders = orders.filter(customer__user_id=request.session['id'])
-            context['list_of_orders'] = orders
+            pickup_stores = pickup_stores.filter(customer__user_id=request.session['id'])
+            return_stores = return_stores.filter(customer__user_id=request.session['id'])
+
+        context = {
+            'table_data': {'Pickup Orders': pickup_stores, 'Return Orders': return_stores}, # Used for simplifying the code in storehistory.html
+            'list_of_stores': stores,
+            'selected_store_name': selected_store_name,
+            'selected_store_id': selected_store_id
+        }
 
     return render(request, 'vroom/storehistory.html', context) # Render the store history page with context

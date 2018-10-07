@@ -27,15 +27,15 @@
     </section>
     <!--Second section which contains the less important information but is still useful-->
     <div class="sub-cont results"> <!--List of search results-->
-        {% if 'store' in request.GET %} <!-- If the user has already submitted a search -->
+        {% if "store" in request.GET %} <!-- If the user has already submitted a search -->
         <div class="store-box">
             {% if request.session.access == "GENERAL_STAFF" %}
             <h2>Store ID: {{ selected_store_id }}</h2>
             {% endif %}
             <h2>Store Name: {{ selected_store_name }}</h2>
 
-            {% for key, value in table_data.items %}
-            <h3>{{ key }}</h3> <!--Display table name-->
+            {% for title, order_list in table_data.items %}
+            <h3>{{ title }}</h3> <!--Display table name-->
             <table>
                 <tbody>
                     <tr>
@@ -57,8 +57,7 @@
                         <th>Return Store ID</th>
                         {% endif %}
                     </tr>
-                    {% for item in list_of_orders %} <!--For Each order in the list of orders-->
-                    {% if selected_store_id == item.value %} <!--If the Store ID matches the attribute in the order-->
+                    {% for item in order_list %} <!--For Each order in the list of orders-->
                     <tr>
                         {% if request.session.access == "GENERAL_STAFF" %}
                         <td>{{ item.order_id }}</td>
@@ -78,7 +77,6 @@
                         <td>{{ item.return_store_id }}</td>
                         {% endif%}
                     </tr>
-                    {% endif %}
                     {% endfor %}
                 </tbody>
             </table>
