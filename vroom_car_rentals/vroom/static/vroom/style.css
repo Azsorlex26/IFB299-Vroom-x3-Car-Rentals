@@ -347,6 +347,10 @@ footer p {
     cursor: default;
 }
 
+#filters h4 {
+    text-align: center;
+}
+
 #sortBy input[type=radio], #sortBy select, #filters select {
     cursor: pointer;
 }

@@ -21,6 +21,9 @@
                     {% endif %}
                     {% endfor %}
                 </select>
+                {% if selected_store_id %} <!--Only have the clear button appear when a store is selected-->
+                <input type="submit" name="clear" value="Clear Filter"> <!--Clears the store filter-->
+                {% endif %}
                 <input type="submit">
             </form>
         </div>
@@ -42,7 +45,7 @@
                     <tr>
                         {% if request.session.access == "GENERAL_STAFF" %}
                         <th>Order ID</th>
-                        <th>Creation Date</th>
+                        <th>Order Creation Date</th>
                         <th>Pickup Date</th>
                         <th>Return Date</th>
                         <th>Car ID</th>
@@ -50,7 +53,7 @@
                         <th>Pickup Store ID</th>
                         <th>Return Store ID</th>
                         {% elif request.session.access == "CUSTOMER" %}
-                        <th>Creation Date</th>
+                        <th>Order Creation Date</th>
                         <th>Pickup Date</th>
                         <th>Return Date</th>
                         <th>Car</th>
