@@ -120,27 +120,29 @@ def stores(request):
     return render(request, 'vroom/stores.html', context)
 
 def storehistory(request):
+    orders = get_all_orders() # Retrive all the order information (from functions.py)
     stores = get_all_stores() # Retrieve all the store information (from functions.py)
-    context = {'list_of_stores': stores}
-    if 'store' in request.GET:
-        orders = get_all_orders() # Retrive all the order information (from functions.py)
-        selected_store_id = int(request.GET.get('store')) # Retrieve the selected store from the html form
-        pickup_stores = orders.filter(pickup_store=selected_store_id)
-        return_stores = orders.filter(return_store=selected_store_id)
-        for store in stores:
-            if store.store_id == selected_store_id: # If the store id is the same as the selected store, overide the store name to equal that of the selected store
-                selected_store_name = store.name
-                break
+    try: # A failure occurs when no one is logged in (accessing via search bar)
+        if request.session['access'] == "CUSTOMER": # This is the line that fails
+            orders = orders.filter(customer__user_id=request.session['id'])
+        context = {'list_of_stores': stores, 'table_data': {'Orders': orders}}
 
-        if request.session['access'] == "CUSTOMER":
-            pickup_stores = pickup_stores.filter(customer__user_id=request.session['id'])
-            return_stores = return_stores.filter(customer__user_id=request.session['id'])
+        if 'store' in request.GET:
+            selected_store_id = int(request.GET.get('store')) # Retrieve the selected store from the html form
+            pickup_stores = orders.filter(pickup_store=selected_store_id)
+            return_stores = orders.filter(return_store=selected_store_id)
+            for store in stores:
+                if store.store_id == selected_store_id: # If the store id is the same as the selected store, overide the store name to equal that of the selected store
+                    selected_store_name = store.name
+                    break
 
-        context = {
-            'table_data': {'Pickup Orders': pickup_stores, 'Return Orders': return_stores}, # Used for simplifying the code in storehistory.html
-            'list_of_stores': stores,
-            'selected_store_name': selected_store_name,
-            'selected_store_id': selected_store_id
-        }
+            context = {
+                'table_data': {'Pickup Orders': pickup_stores, 'Return Orders': return_stores}, # Used for simplifying the code in storehistory.html
+                'list_of_stores': stores,
+                'selected_store_name': selected_store_name,
+                'selected_store_id': selected_store_id
+            }
+    except: # Prevent a user that isn't logged in from viewing anything upon failure
+        context = {'list_of_stores': stores, 'table_data': {"You don't have permission to view this page.": None}}
 
     return render(request, 'vroom/storehistory.html', context) # Render the store history page with context
