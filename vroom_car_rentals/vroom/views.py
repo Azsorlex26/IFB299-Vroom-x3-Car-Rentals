@@ -128,21 +128,17 @@ def storehistory(request):
         context = {'list_of_stores': stores, 'table_data': {'Orders': orders}}
 
         if 'store' in request.GET and not 'clear' in request.GET:
-            selected_store_id = int(request.GET.get('store')) # Retrieve the selected store from the html form
+            selected_store_id = int(request.GET.get('store')) # Retrieve the selected store id from the html form
             pickup_stores = orders.filter(pickup_store=selected_store_id)
             return_stores = orders.filter(return_store=selected_store_id)
-            for store in stores:
-                if store.store_id == selected_store_id: # If the store id is the same as the selected store, overide the store name to equal that of the selected store
-                    selected_store_name = store.name
-                    break
-
+            selected_store_name = stores.get(store_id=selected_store_id).name # Retrieve the name that belongs to the ID
             context = {
-                'table_data': {'Pickup Orders': pickup_stores, 'Return Orders': return_stores}, # Used for simplifying the code in storehistory.html
                 'list_of_stores': stores,
+                'table_data': {'Pickup Orders': pickup_stores, 'Return Orders': return_stores}, # Used for simplifying the code in storehistory.html
                 'selected_store_name': selected_store_name,
                 'selected_store_id': selected_store_id
             }
-    except: # Prevent a user that isn't logged in from viewing anything upon failure
+    except KeyError: # Prevent a user that isn't logged in from viewing anything upon failure
         context = {'list_of_stores': stores, 'table_data': {"You don't have permission to view this page.": None}}
 
     return render(request, 'vroom/storehistory.html', context) # Render the store history page with context
