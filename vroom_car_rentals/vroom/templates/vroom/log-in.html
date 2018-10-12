@@ -15,7 +15,7 @@
                 {% if id and password %}
                 <p class="bad-login">Error: ID/Password was incorrect</p>
                 {% endif %}
-                <input type="text" name="id" placeholder="User ID" required value="{{ id }}" />
+                <input type="text" name="id" placeholder="User ID" pattern="[0-9]*" required value="{{ id }}" />
                 <input type="password" name="password" placeholder="Password" pattern="[^\n ]{5,}" title="Password should be 5 or more characters" required value="{{ password }}" />
                 <input type="submit" value="Log In" />
             </fieldset>
