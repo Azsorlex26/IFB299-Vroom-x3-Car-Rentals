@@ -142,3 +142,7 @@ def storehistory(request):
         context = {'list_of_stores': stores, 'table_data': {"You don't have permission to view this page.": None}}
 
     return render(request, 'vroom/storehistory.html', context) # Render the store history page with context
+	
+def analytics(request):
+
+    return render(request, 'vroom/analytics.html')
