@@ -12,6 +12,7 @@
                 <li><a href="{% url 'vroom:viewcustomers' %}">Customers</a></li>
                 {% endif %}
                 <li><a href="{% url 'vroom:storehistory' %}">Rental History</a></li>
+                <li><a href="{% url 'vroom:analytics' %}">Analytics</a></li>
                 <li class="sign-up-btn"><a href="{% url 'vroom:logout' %}">Log Out</a></li>
                 <b>Logged in as: {{request.session.username}}</b>
                 {% else %} <!--Only shows the login button when no one is logged in-->

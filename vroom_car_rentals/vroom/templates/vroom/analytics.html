@@ -1,0 +1,31 @@
+{% extends "vroom/base.html" %}
+
+{% block content %}
+{% load static %}
+
+<main>
+    <section class="main-cont">
+        <img src="{% static 'vroom/images/logo-white.png' %}" alt="" />
+        <h2>Historical Analytics</h2><br>
+    </section>
+	<div class="store-box">
+        <table>
+            <tbody>
+                <tr>
+                    <th>Most Used Cars</th>
+                    <th>Most Active Customers</th>
+                    <th>View Store Activity</th>
+                </tr>
+                <tr>
+                    <td>Most Used Cars infographic</td>
+                    <td>Most Active Customers infographic</td>
+                    <td>Store Activity infographic</td>
+
+                </tr>
+            </tbody>
+        </table>
+        <br><br>
+    </div>
+</main>
+
+{% endblock %}

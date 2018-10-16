@@ -10,6 +10,7 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('stores/', views.stores, name='stores'),
     path('store-history/', views.storehistory, name='storehistory'),
-    path('customers/', views.viewcustomers, name='viewcustomers')
+    path('customers/', views.viewcustomers, name='viewcustomers'),
+	path('analytics/', views.analytics, name='analytics')
 
 ]
