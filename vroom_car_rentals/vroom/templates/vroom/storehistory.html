@@ -43,7 +43,7 @@
             <table>
                 <tbody>
                     <tr>
-                        {% if request.session.access == "GENERAL_STAFF" %}
+                        {% if 'No' not in title and request.session.access == "GENERAL_STAFF" %}
                         <th>Order ID</th>
                         <th>Order Creation Date</th>
                         <th>Pickup Date</th>
@@ -52,7 +52,7 @@
                         <th>Customer ID</th>
                         <th>Pickup Store ID</th>
                         <th>Return Store ID</th>
-                        {% elif request.session.access == "CUSTOMER" %}
+                        {% elif 'No' not in title and request.session.access == "CUSTOMER" %}
                         <th>Order Creation Date</th>
                         <th>Pickup Date</th>
                         <th>Return Date</th>

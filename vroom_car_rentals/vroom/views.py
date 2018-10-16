@@ -132,9 +132,17 @@ def storehistory(request):
             pickup_stores = orders.filter(pickup_store=selected_store_id)
             return_stores = orders.filter(return_store=selected_store_id)
             selected_store_name = stores.get(store_id=selected_store_id).name # Retrieve the name that belongs to the ID
+            pickup_order_table_name = 'Pickup Orders:'
+            return_order_table_name = 'Return Orders:'
+            
+            if len(pickup_stores) == 0: # If there aren't any values in pickup_stores and/or return_stores, set the respective title to have 'No' at the begining
+                pickup_order_table_name = 'No Pickup Orders'
+            if len(return_stores) == 0:
+                return_order_table_name = 'No Return Orders'
+
             context = {
                 'list_of_stores': stores,
-                'table_data': {'Pickup Orders': pickup_stores, 'Return Orders': return_stores}, # Used for simplifying the code in storehistory.html
+                'table_data': {pickup_order_table_name: pickup_stores, return_order_table_name: return_stores}, # Used for simplifying the code in storehistory.html
                 'selected_store_name': selected_store_name,
                 'selected_store_id': selected_store_id
             }
