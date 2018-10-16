@@ -11,9 +11,10 @@ def cars(request):
     make_name = Car.objects.values('make_name').order_by('make_name').distinct() # Retrieves all makes of cars from the database
     seriesYear = Car.objects.values('seriesYear').order_by('seriesYear').distinct() # Retrieves the years stored in the database
     fuel_system = Car.objects.values('fuel_system').order_by('fuel_system').distinct() # Retrieves the fuel systems stored in the database
+    body_type = Car.objects.values('body_type').order_by('body_type').distinct() # Retrieves the different types of cars stored in the database
     drive = Car.objects.values('drive').order_by('drive').distinct() # Retrieves the drive types stored in the database
     filter = '' # Declare a string that'll be used for getting results by name
-    context = {'list_of_cars': cars, 'filter': filter, 'stores': stores, 'make_name': make_name, 'seriesYear': seriesYear, 'fuel_system': fuel_system, 'drive': drive} # Create a context dictionary that contains the retrieved cars and information used in filters
+    context = {'list_of_cars': cars, 'filter': filter, 'stores': stores, 'make_name': make_name, 'seriesYear': seriesYear, 'fuel_system': fuel_system, 'body_type': body_type, 'drive': drive} # Create a context dictionary that contains the retrieved cars and information used in filters
     
     if 'search' in request.GET: # The user has entered the cars page via the home site search or the cars page search bar
         filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the cars retrieved
@@ -61,6 +62,10 @@ def cars(request):
         if 'fuel_system' in request.GET and request.GET.get('fuel_system') != "": # Apply the fuel_system filter if it is used when searching
             cars = cars.filter(car__fuel_system=request.GET.get('fuel_system')) # Filter the data to only show cars of the searched fuel system
             filter_names.append(request.GET.get('fuel_system')) # Add filter to the list of selected filters
+
+        if 'body_type' in request.GET and request.GET.get('body_type') != "": # Apply the drive type filter if it is used when searching
+            cars = cars.filter(car__body_type=request.GET.get('body_type')) # Filter the data to only show cars of the searched drive type
+            filter_names.append(request.GET.get('body_type')) # Add filter to the list of selected filters
 
         if 'drive' in request.GET and request.GET.get('drive') != "": # Apply the drive type filter if it is used when searching
             cars = cars.filter(car__drive=request.GET.get('drive')) # Filter the data to only show cars of the searched drive type

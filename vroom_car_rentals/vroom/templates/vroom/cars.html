@@ -124,6 +124,16 @@
                     {% endif %}
                     {% endfor %}
                 </select>
+                <select name="body_type">
+                    <option value="">Body Type:</option>
+                    {% for item in body_type %}
+                    {% if not item.body_type in filter_names %}
+                    <option value="{{ item.body_type }}">{{ item.body_type }}</option>
+                    {% else %}
+                    <option value="{{ item.body_type }}" selected>{{ item.body_type }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
                 <select name="drive">
                     <option value="">Drive:</option>
                     {% for item in drive %}
