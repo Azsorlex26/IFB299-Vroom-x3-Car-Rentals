@@ -4,10 +4,6 @@
 {% load static %}
 
 <script>
-	function onload() {
-        hide_drop("{{sort}}");
-	}
-	
 	function hide_drop(value){
 		document.getElementById("tank_high").style.visibility = "hidden";
 		document.getElementById("price_high").style.visibility = "hidden";
@@ -80,7 +76,7 @@
 				</select>
                 <br>
 			</div>
-			<script type="text/javascript"> onload();</script>
+			<script type="text/javascript"> hide_drop('{{sort}}');</script>
 			
             <div id="filters">
 			<strong>Filter By:</strong> <br>
@@ -149,12 +145,9 @@
     </section>
     <!--Second section which contains the less important information but is still useful-->
     <div class="sub-cont results">
-        {% if list_of_cars != None %}
         <h3>Results</h3>
         <!--List of search results-->
-        {% if not list_of_cars %}
-        <p>Oops. We couldn't find any cars matching your search</p>
-        {% else %}
+        {% if list_of_cars %}
         <table>
             <tbody>
                 <tr>
@@ -201,7 +194,8 @@
                 {% endfor %}
             </tbody>
         </table>
-        {% endif %}
+        {% else %}
+        <p>Oops. We couldn't find any cars matching your search</p>
         {% endif %}
     </div>
 </main>

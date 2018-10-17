@@ -4,7 +4,7 @@
 {% load static %}
 <!-- Main content of the webpage -->
 <main>
- <!--First section of the main content. A banner which usually displays the most important information-->
+    <!--First section of the main content. A banner which usually displays the most important information-->
     <section class="main-cont">
         <h2 class="search-heading">Search</h2>
         <form id="user-form" name="searchForm" method="GET" action="{% url 'vroom:viewcustomers' %}">
@@ -14,40 +14,39 @@
                 {% else %}
                 <input type="search" name="search" id="search-text" placeholder="Enter a name" value={{ filter }} />
                 {% endif %}
-                <input type="submit" id="search-btn" value="Search"/>
+                <input type="submit" id="search-btn" value="Search" />
             </div>
         </form>
     </section>
     <!-- this here is for the return of the search -->
     <div class="sub-cont results">
         {% if request.session.access == 'GENERAL_STAFF' %} <!-- Check if the user is a member of staff -->
-            <h3>Results</h3>
-            <!--List of search results-->
-            {% if not list_of_users %}
-            <p>Oops. We couldn't find any customers matching your search</p>
-            {% else %}
-            <table>
-                <tbody>
-                    <tr>
-                        <th>User ID</th>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Birthday</th>
-                    </tr>
-
-                    {% for item in list_of_users %}
-                    <tr>
-                        <td>{{item.user_id}}</td>
-                        <td>{{item.name}}</td>
-                        <td>{{item.phone}}</td>
-                        <td>{{item.address}}</td>
-                        <td>{{item.birthday}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% endif %}
+        <h3>Results</h3>
+        <!--List of search results-->
+        {% if list_of_users %}
+        <table>
+            <tbody>
+                <tr>
+                    <th>User ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Birthday</th>
+                </tr>
+                {% for item in list_of_users %}
+                <tr>
+                    <td>{{item.user_id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.phone}}</td>
+                    <td>{{item.address}}</td>
+                    <td>{{item.birthday}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Oops. We couldn't find any customers matching your search</p>
+        {% endif %}
         {% else %}
         <h2>Staff Only Information - Please Login to Continue</h2>
         {% endif %}

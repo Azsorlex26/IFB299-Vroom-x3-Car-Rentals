@@ -14,22 +14,22 @@ def cars(request):
     body_type = Car.objects.values('body_type').order_by('body_type').distinct() # Retrieves the different types of cars stored in the database
     drive = Car.objects.values('drive').order_by('drive').distinct() # Retrieves the drive types stored in the database
     filter = '' # Declare a string that'll be used for getting results by name
-    context = {'list_of_cars': cars, 'filter': filter, 'stores': stores, 'make_name': make_name, 'seriesYear': seriesYear, 'fuel_system': fuel_system, 'body_type': body_type, 'drive': drive} # Create a context dictionary that contains the retrieved cars and information used in filters
-    
+    # Create a context dictionary that contains the retrieved cars and information used in filters
+    context = {'list_of_cars': cars, 'filter': filter, 'stores': stores, 'make_name': make_name, 'seriesYear': seriesYear, 'fuel_system': fuel_system, 'body_type': body_type, 'drive': drive}
+
     if 'search' in request.GET: # The user has entered the cars page via the home site search or the cars page search bar
         filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the cars retrieved
         context['filter'] = filter # Update the context
-
         filter_names = list() # Create a list to store the currently selected filter values
-	
+
         if 'sort' in request.GET: # Sort the Results by Tank Capacity and determine sort input
             if request.GET.get('sort') == "Car_TankCapacity":
                 context['sort'] = 'tank_high' # Set field to sort by to tank_high
                 filter_names.append(request.GET.get('tank_high')) # Remember which drop-down item was used
                 if request.GET.get('tank_high') == "high": # Sort By highest to lowest
-                    cars = cars.extra({'tank_capacity':"tank_capacity + 0"}).order_by('-tank_capacity')
+                    cars = cars.extra({'tank_capacity': "tank_capacity + 0"}).order_by('-tank_capacity')
                 else: # Sort By Lowest to highest
-                    cars = cars.extra({'tank_capacity':"tank_capacity + 0"}).order_by('tank_capacity')
+                    cars = cars.extra({'tank_capacity': "tank_capacity + 0"}).order_by('tank_capacity')
 
             elif request.GET.get('sort') == "Price_New": # Sort the Results by Price and determine sort input
                 context['sort'] = 'price_high' # Set field to sort by to price_high
@@ -43,40 +43,27 @@ def cars(request):
                 context['sort'] = 'power_high' # Set field to sort by to power_high
                 filter_names.append(request.GET.get('power_high'))
                 if request.GET.get('power_high') == "high": # Sort from highest to lowest
-                    cars = cars.extra({'power':"power + 0"}).order_by('-power')
+                    cars = cars.extra({'power': "power + 0"}).order_by('-power')
                 else: # Sort from lowest to highest
-                    cars = cars.extra({'power':"power + 0"}).order_by('power')
+                    cars = cars.extra({'power': "power + 0"}).order_by('power')
 
-        if 'store' in request.GET and request.GET.get('store') != "":
-            cars = cars.filter(return_store__name=request.GET.get('store'))
-            filter_names.append(request.GET.get('store'))
-
-        if 'make_name' in request.GET and request.GET.get('make_name') != "": # Apply the make filter if it is used when searching
-            cars = cars.filter(car__make_name=request.GET.get('make_name')) # Filter the data to only show cars of the searched make name
-            filter_names.append(request.GET.get('make_name')) # Add filter to list of selected filters
-		
-        if 'year' in request.GET and request.GET.get('year') != "": # Apply the year filter if it is used when searching
-            cars = cars.filter(car__seriesYear=request.GET.get('year')) # Filter the data to only show cars of the searched year
-            filter_names.append(int(request.GET.get('year'))) # Add filter to list of selected filters
-
-        if 'fuel_system' in request.GET and request.GET.get('fuel_system') != "": # Apply the fuel_system filter if it is used when searching
-            cars = cars.filter(car__fuel_system=request.GET.get('fuel_system')) # Filter the data to only show cars of the searched fuel system
-            filter_names.append(request.GET.get('fuel_system')) # Add filter to the list of selected filters
-
-        if 'body_type' in request.GET and request.GET.get('body_type') != "": # Apply the drive type filter if it is used when searching
-            cars = cars.filter(car__body_type=request.GET.get('body_type')) # Filter the data to only show cars of the searched drive type
-            filter_names.append(request.GET.get('body_type')) # Add filter to the list of selected filters
-
-        if 'drive' in request.GET and request.GET.get('drive') != "": # Apply the drive type filter if it is used when searching
-            cars = cars.filter(car__drive=request.GET.get('drive')) # Filter the data to only show cars of the searched drive type
-            filter_names.append(request.GET.get('drive')) # Add filter to the list of selected filters
+        # Iterates through an array of names and parameters to apply filters.
+        filters = [['store', 'return_store__name'], ['make_name', 'car__make_name'], ['year', 'car__seriesYear'],
+                      ['fuel_system', 'car__fuel_system'], ['body_type', 'car__body_type'], ['drive', 'car__drive']]
+        for name, parameter in filters:
+            if name in request.GET and request.GET.get(name) != "":
+                cars = cars.filter(**{parameter: request.GET.get(name)}) # Set the parameter to be whatever value is retrieved
+                if name != 'year':
+                    filter_names.append(request.GET.get(name))
+                else:
+                    filter_names.append(int(request.GET.get(name)))
 
         if len(filter_names) > 0:
             context['filter_names'] = filter_names
 
     cars = cars.filter(car__model__icontains=filter) # Filter the cars so that only ones with a similar model name appear
     context['list_of_cars'] = cars # Update the context with new results
-		
+
     return render(request, 'vroom/cars.html', context)
 
 def viewcustomers(request):
@@ -96,9 +83,9 @@ def login(request):
     if 'id' in request.POST and 'password' in request.POST: # The user has entered the login site by entering their login details
         id = request.POST.get('id') # Get the input id
         password = request.POST.get('password') # Get the input password (from login form)
+
         if authenticate_user(id, password): # Check that the user exists in the table
             user_information = get_user_info(id, password) # Get the name and access of the user
-
             request.session['username'] = user_information['username'] # Create a session variable for their name
             request.session['access'] = user_information['access'] # Create a session variable for their access
             request.session['id'] = id # Create a session variable for their id
@@ -107,7 +94,7 @@ def login(request):
 
         context = {'id': id, 'password': password} # The users information was not found in the database
         return render(request, 'vroom/log-in.html', context) # Render the login page again (will now have their details auto-filled and a message)
-    
+
     return render(request, 'vroom/log-in.html') # Render the login page for the first time
 
 def logout(request):
@@ -121,7 +108,7 @@ def logout(request):
 
 def stores(request):
     stores = Store.objects.values('name', 'address', 'phone')
-    context = {'stores' : stores}
+    context = {'stores': stores}
     return render(request, 'vroom/stores.html', context)
 
 def storehistory(request):
@@ -139,7 +126,7 @@ def storehistory(request):
             selected_store_name = stores.get(store_id=selected_store_id).name # Retrieve the name that belongs to the ID
             pickup_order_table_name = 'Pickup Orders:'
             return_order_table_name = 'Return Orders:'
-            
+
             if len(pickup_stores) == 0: # If there aren't any values in pickup_stores and/or return_stores, set the respective title to have 'No' at the begining
                 pickup_order_table_name = 'No Pickup Orders'
             if len(return_stores) == 0:
@@ -155,7 +142,7 @@ def storehistory(request):
         context = {'list_of_stores': stores, 'table_data': {"You don't have permission to view this page.": None}}
 
     return render(request, 'vroom/storehistory.html', context) # Render the store history page with context
-	
+
 def analytics(request):
 
     return render(request, 'vroom/analytics.html')
