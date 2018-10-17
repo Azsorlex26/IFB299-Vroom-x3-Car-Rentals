@@ -54,7 +54,7 @@ def cars(request):
         for name, parameter in filters:
             if name in request.GET and request.GET.get(name) != "":
                 cars = cars.filter(**{parameter: request.GET.get(name)}) # Set the parameter to be whatever value is retrieved
-                if name != 'year':
+                if name not in ('year', 'seating_capacity'):
                     filter_names.append(request.GET.get(name))
                 else:
                     filter_names.append(int(request.GET.get(name)))
