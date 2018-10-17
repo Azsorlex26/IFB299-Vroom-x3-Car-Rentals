@@ -130,6 +130,16 @@
                     {% endif %}
                     {% endfor %}
                 </select>
+                <select name="seating_capacity">
+                    <option value="">Seating:</option>
+                    {% for item in seating_capacity %}
+                    {% if not item.seating_capacity in filter_names %}
+                    <option value="{{ item.seating_capacity }}">{{ item.seating_capacity }}</option>
+                    {% else %}
+                    <option value="{{ item.seating_capacity }}" selected>{{ item.seating_capacity }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
                 <select name="drive">
                     <option value="">Drive:</option>
                     {% for item in drive %}

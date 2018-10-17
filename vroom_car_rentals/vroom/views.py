@@ -12,11 +12,11 @@ def cars(request):
     seriesYear = Car.objects.values('seriesYear').order_by('seriesYear').distinct() # Retrieves the years stored in the database
     fuel_system = Car.objects.values('fuel_system').order_by('fuel_system').distinct() # Retrieves the fuel systems stored in the database
     body_type = Car.objects.values('body_type').order_by('body_type').distinct() # Retrieves the different types of cars stored in the database
+    seating_capacity = Car.objects.values('seating_capacity').order_by('seating_capacity').distinct() # Retrieves the seating_capacity stored in the database	
     drive = Car.objects.values('drive').order_by('drive').distinct() # Retrieves the drive types stored in the database
     filter = '' # Declare a string that'll be used for getting results by name
-    # Create a context dictionary that contains the retrieved cars and information used in filters
-    context = {'list_of_cars': cars, 'filter': filter, 'stores': stores, 'make_name': make_name, 'seriesYear': seriesYear, 'fuel_system': fuel_system, 'body_type': body_type, 'drive': drive}
-
+    context = {'list_of_cars': cars, 'filter': filter, 'stores': stores, 'make_name': make_name, 'seriesYear': seriesYear, 'fuel_system': fuel_system, 'body_type': body_type, 'seating_capacity': seating_capacity, 'drive': drive} # Create a context dictionary that contains the retrieved cars and information used in filters
+    
     if 'search' in request.GET: # The user has entered the cars page via the home site search or the cars page search bar
         filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the cars retrieved
         context['filter'] = filter # Update the context
@@ -49,7 +49,8 @@ def cars(request):
 
         # Iterates through an array of names and parameters to apply filters.
         filters = [['store', 'return_store__name'], ['make_name', 'car__make_name'], ['year', 'car__seriesYear'],
-                      ['fuel_system', 'car__fuel_system'], ['body_type', 'car__body_type'], ['drive', 'car__drive']]
+                      ['fuel_system', 'car__fuel_system'], ['body_type', 'car__body_type'], ['drive', 'car__drive'],
+                      ['seating_capacity', 'car__seating_capacity']]
         for name, parameter in filters:
             if name in request.GET and request.GET.get(name) != "":
                 cars = cars.filter(**{parameter: request.GET.get(name)}) # Set the parameter to be whatever value is retrieved
