@@ -11,6 +11,7 @@ urlpatterns = [
     path('stores/', views.stores, name='stores'),
     path('store-history/', views.storehistory, name='storehistory'),
     path('customers/', views.viewcustomers, name='viewcustomers'),
-	path('analytics/', views.analytics, name='analytics')
+    path('analytics/', views.analytics, name='analytics'),
+    path('customer-history/', views.customerhistory, name='viewcustomerhistory')
 
 ]
