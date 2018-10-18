@@ -146,7 +146,7 @@ def storehistory(request):
 
 def analytics(request):
 
-    return render(request, 'vroom/analytics.html')
+    return render(request, 'vroom/analytics.html') 
 
 def customerhistory(request):
    orders = get_all_orders() #Retrieve all the order information (from functions.py)
@@ -154,3 +154,5 @@ def customerhistory(request):
    if 'customer' in request.GET and not 'clear' in request.GET:
             selected_customer_id = int(request.GET.get('customer')) # Retrieve the selected customer id from the html form
             pickup_stores = orders.filter(pickup_store=selected_store_id)
+            return render(request, 'vroom/storehistory.html', context) # Render the store history page with context
+
