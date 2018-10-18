@@ -149,15 +149,8 @@ def analytics(request):
     return render(request, 'vroom/analytics.html')
 
 def customerhistory(request):
-    customers = get_all_customers # Retrieves all the cusmer information (from functions.py)
-    context = {'list_of_customers': customers}
-
-    if 'customer' in request.GET:
-        customer = get_all_customers() #Retrieve all the customer information (from functions.py)
-        selected_customer_name = str(request.GET.get('customer')) #Retrieve the selected customer information
-        for customer in customers:
-            if (customer.customer.name == selected_customer_name):
-                selected_customer_name = customer.name
-
-    return render(request, 'vroom/customerhistory.html', context) #Render the customer history page
-
+   orders = get_all_orders() #Retrieve all the order information (from functions.py)
+   customer = get_all_customers() #Retrieve all the order information (from function.py)
+   if 'customer' in request.GET and not 'clear' in request.GET:
+            selected_customer_id = int(request.GET.get('customer')) # Retrieve the selected customer id from the html form
+            pickup_stores = orders.filter(pickup_store=selected_store_id)
