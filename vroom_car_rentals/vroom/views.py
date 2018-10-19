@@ -132,27 +132,26 @@ def storehistory(request):
                 pickup_order_table_name = 'No Pickup Orders'
             if len(return_stores) == 0:
                 return_order_table_name = 'No Return Orders'
-
+ 
             context = {
                 'list_of_stores': stores,
                 'table_data': {pickup_order_table_name: pickup_stores, return_order_table_name: return_stores}, # Used for simplifying the code in storehistory.html
                 'selected_store_name': selected_store_name,
                 'selected_store_id': selected_store_id
             }
-    except KeyError: # Prevent a user that isn't logged in from viewing anything upon failure
+        if 'customer' in request.GET and not 'clear' in request.GET:
+            selected_customer_id = int(request.GET.get('customer')) #Retrieve the selected customer id from the html form
+            customer_orders = orders.filter(customer_orders=selected_customer_id)
+            customer_order_table_name = 'Customer Orders:'
+
+            if len(customer_orders) == 0:
+                customer_orders_table_name = 'No Customer Orders'
+            
+    except KeyError: #Prevent a user that isn't logged in frm viewing anything upon failure
         context = {'list_of_stores': stores, 'table_data': {"You don't have permission to view this page.": None}}
-
+        
     return render(request, 'vroom/storehistory.html', context) # Render the store history page with context
-
+    
 def analytics(request):
-
     return render(request, 'vroom/analytics.html') 
-
-def customerhistory(request):
-   orders = get_all_orders() #Retrieve all the order information (from functions.py)
-   customer = get_all_customers() #Retrieve all the order information (from function.py)
-   if 'customer' in request.GET and not 'clear' in request.GET:
-            selected_customer_id = int(request.GET.get('customer')) # Retrieve the selected customer id from the html form
-            pickup_stores = orders.filter(pickup_store=selected_store_id)
-            return render(request, 'vroom/storehistory.html', context) # Render the store history page with context
 

@@ -29,12 +29,12 @@
         </div>
          <!--Display customer rental history in a drop down box-->
      <div id="filters">
-        <h4>Select A Customer to View</h4>
+        <h4>Select A Customer Orders History to View</h4>
         <form id="customer-history-form" name="searchForm" method="GET" action="{% url 'vroom:storehistory' %}">
             <select name="customer">
                 <option selected disabled>Select Customer:</option> <!-- Display all the customers in a drop down box -->
                 {% for item in list_of_customers %}
-                {% if not item.name in selected_customer_name %} <!-- If the customer name is not the selected one -->
+                {% if not item.name in selected_customer_id %} <!-- If the customer name is not the selected one -->
                 <option value={{ item.customer_id }}>{{ item.name }}</option> <!-- Add it as a non-selected option -->
                 {% else %}
                 <option value={{ item.customer_id }} selected>{{ item.name }}</option> <!-- Else Add it with a selected tag -->
