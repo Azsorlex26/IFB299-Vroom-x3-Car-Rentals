@@ -4,6 +4,20 @@
 {% load static %}
 
 <script>
+	function update(element){
+		var minPrice = document.getElementById('price-min').value;
+		var maxPrice = document.getElementById('price-max').value;
+		
+		if (element == 'price-min'){
+			document.getElementById('minSpan').innerHTML="$"+ minPrice;
+			document.getElementById('price-min').max=maxPrice;
+		}
+		else if (element == 'price-max'){
+			document.getElementById('maxSpan').innerHTML="$"+ maxPrice;
+			document.getElementById('price-max').min=minPrice;
+		}
+	}
+	
 	function hide_drop(value){
 		document.getElementById("tank_high").style.visibility = "hidden";
 		document.getElementById("price_high").style.visibility = "hidden";
@@ -151,6 +165,12 @@
                     {% endfor %}
                 </select>
             </div>
+			<div class="rangeslider">
+				<label for="price-min">Min:</label>
+				<input type="range" name="price-min" id="price-min" value="0" min="0" step= '1000' max='250000' oninput="update('price-min');"><span id="minSpan">$0</span>
+				<label for="price-max">Max:</label>
+				<input type="range" name="price-max" id="price-max" value="250000" min="0" max="250000" step= '1000' oninput="update('price-max');"><span id="maxSpan">$250000</span>
+			</div>
         </form>
     </section>
     <!--Second section which contains the less important information but is still useful-->
