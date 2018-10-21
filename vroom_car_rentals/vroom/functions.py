@@ -159,7 +159,7 @@ def generate_report(year, month):
     num_prev_months = 5 # How many previous months profits to get
 
     # The current months profit
-    month_money = [{'year': year, 'month': calendar.month_name[month], 'money': get_money(year, month)}]
+    month_money = [{'year': year, 'month': calendar.month_name[month], 'money': round(get_money(year, month), 2)}]
 
     prev_month = month
     prev_year = year
@@ -168,7 +168,7 @@ def generate_report(year, month):
         # Wrap the month and year if the month is January
         if (prev_month == 1):
             current_month = 12
-            current_year = prev_month - 1
+            current_year = prev_year - 1
         else: # Decrement only the month
             current_month = prev_month - 1
             current_year = prev_year
@@ -177,7 +177,7 @@ def generate_report(year, month):
         prev_year = current_year
 
         # Append the current, previous month to the front of the dictionary
-        month_money = [{'year': current_year, 'month': calendar.month_name[current_month], 'money': get_money(current_year, current_month)}] + month_money
+        month_money = [{'year': current_year, 'month': calendar.month_name[current_month], 'money': round(get_money(current_year, current_month), 4)}] + month_money
 
     store_activity = get_store_activity(year, month)
 

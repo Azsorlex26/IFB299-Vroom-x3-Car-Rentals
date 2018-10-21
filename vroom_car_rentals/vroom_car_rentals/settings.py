@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.humanize',
     'vroom.apps.VroomConfig',
     'django.contrib.admin',
     'django.contrib.auth',

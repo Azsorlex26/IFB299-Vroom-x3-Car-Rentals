@@ -3,6 +3,7 @@
 {% block content %}
 {% load static %}
 {% load vroom_extras %}
+{% load humanize %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <main>
@@ -65,11 +66,11 @@
         <div id="money-made">
             <div id="revenue">
                 <h3>Revenue</h3>
-                <p>${{ money.money }}</p>
+                <p>${{ money.money|intcomma }}</p>
             </div>
             <div id="growth">
                 <h3>Growth</h3>
-                <p>{{ report.sign }}{{ report.profit }}</p>
+                <p>{{ report.sign }}{{ report.profit|intcomma }}</p>
             </div>
         </div>
         {% endwith %}
@@ -77,9 +78,13 @@
         <div id="top-content">
             <div>
                 <h3>Top Customers</h3>
-                {% for customer in report.active_customers %}
-                    <p>{{customer.customer__name}} ({{customer.customer__user_id}}) visited {{customer.frequency}} time/s</p>
-                {% endfor %}
+                {% if report.active_customers.count == 0 %}
+                    <p>No Customers</p>
+                {% else %}
+                    {% for customer in report.active_customers %}
+                        <p>{{customer.customer__name}} ({{customer.customer__user_id}}) visited {{customer.frequency}} time/s</p>
+                    {% endfor %}
+                {% endif %}
             </div>
             <div>
                 <h3>Top Stores</h3>
