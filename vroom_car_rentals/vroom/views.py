@@ -1,12 +1,15 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .functions import *
+import re
+import calendar
 
 def index(request):
     return render(request, 'vroom/index.html')
 
 def cars(request):
     cars = get_all_cars() # Retrieve all the cars and the relevant information (from functions.py)
+<<<<<<< HEAD
     stores = store.objects.values('name') # Retrieves the names of the stores
     make_name = car.objects.values('make_name').order_by('make_name').distinct() # Retrieves all makes of cars from the database
     seriesYear = car.objects.values('seriesYear').order_by('seriesYear').distinct() # Retrieves the years stored in the database
@@ -14,9 +17,18 @@ def cars(request):
     body_type = car.objects.values('body_type').order_by('body_type').distinct() # Retrieves the different types of cars stored in the database
     seating_capacity = car.objects.values('seating_capacity').order_by('seating_capacity').distinct() # Retrieves the seating_capacity stored in the database	
     drive = car.objects.values('drive').order_by('drive').distinct() # Retrieves the drive types stored in the database
+=======
+    stores = Store.objects.values('name') # Retrieves the names of the stores
+    make_name = Car.objects.values('make_name').order_by('make_name').distinct() # Retrieves all makes of cars from the database
+    seriesYear = Car.objects.values('seriesYear').order_by('seriesYear').distinct() # Retrieves the years stored in the database
+    fuel_system = Car.objects.values('fuel_system').order_by('fuel_system').distinct() # Retrieves the fuel systems stored in the database
+    body_type = Car.objects.values('body_type').order_by('body_type').distinct() # Retrieves the different types of cars stored in the database
+    seating_capacity = Car.objects.values('seating_capacity').order_by('seating_capacity').distinct() # Retrieves the seating_capacity stored in the database
+    drive = Car.objects.values('drive').order_by('drive').distinct() # Retrieves the drive types stored in the database
+>>>>>>> 3e7fc65a8c8eff5c4fb100a59e49e9189d5c764b
     filter = '' # Declare a string that'll be used for getting results by name
     context = {'list_of_cars': cars, 'filter': filter, 'stores': stores, 'make_name': make_name, 'seriesYear': seriesYear, 'fuel_system': fuel_system, 'body_type': body_type, 'seating_capacity': seating_capacity, 'drive': drive} # Create a context dictionary that contains the retrieved cars and information used in filters
-    
+
     if 'search' in request.GET: # The user has entered the cars page via the home site search or the cars page search bar
         filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the cars retrieved
         context['filter'] = filter # Update the context
@@ -151,12 +163,30 @@ def storehistory(request):
 
             if len(customer_orders) == 0:
                 customer_orders_table_name = 'No Customer Orders'
-            
+
     except KeyError: #Prevent a user that isn't logged in frm viewing anything upon failure
         context = {'list_of_stores': stores, 'table_data': {"You don't have permission to view this page.": None}}
-        
-    return render(request, 'vroom/storehistory.html', context) # Render the store history page with context
-    
-def analytics(request):
-    return render(request, 'vroom/analytics.html') 
 
+    return render(request, 'vroom/storehistory.html', context) # Render the store history page with context
+
+def analytics(request):
+    # Minimum and maximum date for the report month selector
+    min_date = "%d-%02d" % (get_min_order_date()['min_date'].year, get_min_order_date()['min_date'].month)
+    max_date = "%d-%02d" % (get_max_order_date()['max_date'].year, get_max_order_date()['max_date'].month)
+
+    context = {'min_date': min_date, 'max_date': max_date}
+
+    date_expression = re.compile('^[0-9]{4}-[0-9]{2}$') # Regex to check date input
+
+    if 'report' in request.GET and date_expression.match(request.GET.get('report')): # Ensure get request exists and is correct date format
+        date = request.GET.get('report') # Get requested month
+
+        report = generate_report(int(date[:4]), int(date[-2:])) # Get report information
+
+        # Fill report information into context
+        context['report'] = report
+        context['selected_date'] = date
+        context['selected_date_text'] = calendar.month_name[int(date[-2:])] + ', ' + date[:4] # String version of month (e.g July, 2005)
+
+
+    return render(request, 'vroom/analytics.html', context)
