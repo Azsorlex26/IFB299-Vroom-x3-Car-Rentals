@@ -10,6 +10,7 @@
     --orange: #FDC437;
     --red: #eb4a24;
     --dark-grey: #dee2e2;
+    --light-blue: #6374cd;
 }
 
 /* Styles for mobile / tablets */
@@ -59,12 +60,12 @@ header h1 {
     }
 
     header h1 {
-        margin-left: 14%;
+        margin-left: 12%;
         margin-bottom: 0.67em;
     }
 
     nav {
-        margin-right: 14%;
+        margin-right: 12%;
     }
 
     main {
@@ -281,7 +282,7 @@ footer p {
 */
 /*==========Styles for search.html==========*/
 
-#cars-form, #user-form {
+#cars-form, #user-form, #report-form {
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -531,4 +532,190 @@ td:first-child {
     padding-left: 20px;
     padding-right: 20px;
     margin-top: 5%;
+}
+
+/*
+================================================================================
+*/
+/*==========Styles for analytics.html==========*/
+#report-form #main-search {
+    align-items: center;
+    justify-content: center;
+}
+
+#report-form input[type=month] {
+    border: 1px solid var(--dark-grey);
+    padding: 5px 20px;
+    font-size: 20px;
+    background-color: #f2f2f2;
+}
+
+#report-form input[type=month]:hover {
+    background-color: var(--white);
+}
+
+#report-form input[type=month]:focus {
+    outline: 0;
+}
+
+
+#report-form input[type=submit] {
+    padding: 12px 7px;
+}
+
+#report-form p {
+    color: var(--black);
+    margin-bottom: 10px;
+}
+
+#report {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 20%;
+    padding: 0 10px;
+    border: 3px solid var(--blue);
+}
+
+#report h2 {
+    text-align: center;
+    background-color: var(--blue);
+    margin: 0 -10px;
+    padding-top: 20px;
+    color: var(--white);
+}
+
+#report p:first-of-type {
+    color: var(--white);
+    background-color: var(--blue);
+    text-align: center;
+    margin: 0 -10px;
+    padding-bottom: 20px;
+    font-style: italic;
+}
+
+#report #money-made {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#report #money-made div {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 2px solid var(--light-blue);
+}
+
+#report #money-made p {
+    background-color: inherit;
+    color: inherit;
+    margin: 0;
+    padding: 5px 30px;
+}
+
+#report #money-made h3 {
+    text-align: left;
+    padding-left: 5px;
+    background-color: var(--light-blue);
+    color: var(--white);
+    margin: 0;
+    padding: 5px 10px;
+}
+
+#report #top-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#report #top-content div {
+    margin: 10px 10px;
+    padding: 0 10px;
+    border: 1px solid var(--light-blue);
+}
+
+#report #top-content h3 {
+    text-align: center;
+    background-color: var(--light-blue);
+    color: var(--white);
+    margin: 0 -10px;
+    padding: 10px 0;
+}
+
+#report #top-content p {
+    background-color: inherit;
+    color: inherit;
+    padding: inherit;
+    margin: inherit;
+    text-align: left;
+    font-style: normal;
+}
+
+#report .stores {
+    border: 2px solid var(--blue);
+    margin: 10px 0;
+}
+
+#report .stores .store-title {
+    background-color: var(--blue);
+    color: var(--white);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 5px 5px;
+    justify-content: space-between;
+}
+
+#report .store-info-container {
+    display: none;
+}
+
+#report .stores .store-title p {
+    background-color: inherit;
+    color: inherit;
+    padding: inherit;
+    margin: inherit;
+    font-style: normal;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#report .stores .store-title:hover {
+    background-color: var(--light-blue);
+    cursor: pointer;
+}
+
+#report .stores .store-info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#report .stores .store-info div {
+    flex-grow: 1;
+}
+
+#report .stores .store-info p {
+    padding-left: 10px;
+}
+
+#report .stores .store-info .title {
+    margin: inherit;
+    padding: 10px 0;
+    color: var(--white);
+    background-color: var(--light-blue);
+    font-size: 18px;
+    font-style: normal;
+    text-transform: uppercase;
+}
+
+#report .stores .store-info div:nth-of-type(2n+1) {
+    border-right: 1px solid var(--light-blue);
+}
+
+#report .stores .store-info div:nth-of-type(2n) {
+    border-left: 1px solid var(--light-blue);
 }

@@ -2,12 +2,24 @@
 
 {% block content %}
 {% load static %}
-
+{% load vroom_extras %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <main>
     <section class="main-cont">
         <img src="{% static 'vroom/images/logo-white.png' %}" alt="" />
         <h2>Historical Analytics</h2><br>
+        <h2 class="search-heading">Generate Report</h2>
+        <form id="report-form" name="reportForm" method="GET" action="{% url 'vroom:analytics' %}#report">
+            <p>Select a month to generate a report for store activity during that month.</p>
+            <div id="main-search">
+                <input type="month" name="report" min="{{min_date}}" max="{{max_date}}" value="{{selected_date}}"
+                 required/>
+                <input type="submit" id="report-btn" value="Generate Report"/>
+            </div>
+        </form>
     </section>
+    {% if request.session.access == "GENERAL_STAFF" %}
 	<div class="store-box">
         <table>
             <tbody>
@@ -44,6 +56,158 @@
         </table>
         <br><br>
     </div>
-</main>
+    <hr>
+    {% if report %}
+    <div id="report">
+        <h2>Monthly Report</h2>
+        <p>{{selected_date_text}}</p>
+        {% with report.profit_history|last as money %}
+        <div id="money-made">
+            <div id="revenue">
+                <h3>Revenue</h3>
+                <p>${{ money.money }}</p>
+            </div>
+            <div id="growth">
+                <h3>Growth</h3>
+                <p>{{ report.sign }}{{ report.profit }}</p>
+            </div>
+        </div>
+        {% endwith %}
+        <canvas id="profit-chart" height="400" width="1000"></canvas>
+        <div id="top-content">
+            <div>
+                <h3>Top Customers</h3>
+                {% for customer in report.active_customers %}
+                    <p>{{customer.customer__name}} ({{customer.customer__user_id}}) visited {{customer.frequency}} time/s</p>
+                {% endfor %}
+            </div>
+            <div>
+                <h3>Top Stores</h3>
+                {% with report.total_store|slice:":5" as stores %}
+                {% for store in stores %}
+                    <p>{{store.name}} ({{store.store_id}}) had {{store.total_activity}} car/s rented/returned</p>
+                {% endfor %}
+                {% endwith %}
+            </div>
+            <div>
+                <h3>Top Pickup Stores</h3>
+                {% with report.pickup_store|slice:":5" as pickup_stores %}
+                {% for store in pickup_stores %}
+                    <p>{{store.name}} ({{store.store_id}}) had {{store.pickup_activity}} car/s rented</p>
+                {% endfor %}
+                {% endwith %}
+            </div>
+            <div>
+                <h3>Top Return Stores</h3>
+                {% with report.return_store|slice:":5" as return_stores %}
+                {% for store in return_stores %}
+                    <p>{{store.name}} ({{store.store_id}}) had {{store.return_activity}} car/s returned</p>
+                {% endfor %}
+                {% endwith %}
+            </div>
+        </div>
+        {% for store in report.total_store %}
+        <div class="stores">
+            <div class="store-title">
+                <p>Store {{store.store_id}}: {{store.name}}</p>
+                <p>[Pickup: {{store.pickup_activity}}, Return: {{store.return_activity}}, Total: {{store.total_activity}}]</p>
+            </div>
+            <div class="store-info-container">
+            <div class="store-info">
+                <div>
+                    <p class="title">Returns</p>
+                    {% with report.store_car_info|return_item:store.store_id as current_store %}
+                    {% if current_store.return|length == 0 %}
+                        <p>No Entries</p>
+                    {% else %}
+                        {% for car in current_store.return %}
+                            <p>{{car.car__seriesYear|title}} {{car.car__make_name|title}} {{car.car__model|title}} was returned {{car.activity}} time/s</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div>
+                    <p class="title">Pickups</p>
+                    {% if current_store.pickup|length == 0 %}
+                        <p>No Entries</p>
+                    {% else %}
+                        {% for car in current_store.pickup %}
+                            <p>{{car.car__seriesYear|title}} {{car.car__make_name|title}} {{car.car__model|title}} was picked up {{car.activity}} time/s</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
 
+
+
+
+
+        <script>
+        // Get the canvas for the profit chart
+        var profit_canvas = document.getElementById('profit-chart').getContext('2d');
+        // Create a new chart
+        var profit_chart = new Chart(profit_canvas, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                // X values
+                labels: [
+                    {% for date in report.profit_history %}
+                        "{{ date.month }} {{ date.year}} ",
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: "Profit For Previous 5 Months", // Title of plot
+                    backgroundColor: 'rgba(55, 74, 173, 0.4)',
+                    borderColor: 'rgb(55, 74, 173)',
+                    // Y values
+                    data: [
+                        {% for month in report.profit_history %}
+                        {{ month.money }},
+                        {% endfor %}
+                    ],
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+                responsive: false, // Dynamic resize
+                maintainAspectRatio: false, // Same width and height ratio
+                elements: {
+                    line: {
+                        tension: 0, // Disables bezier curves (uses straight lines)
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontSize: 20
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 20
+                        }
+                    }]
+                }
+
+            }
+        });
+
+        // JQuery for displaying store information
+        $(".store-title").click(function() {
+            $(this).next().slideToggle("slow"); // Show/Hide next element
+        });
+        </script>
+    </div>
+    {% endif %}
+    {% else %}
+        <h3 style="text-align: center">Access Denied: You must be logged in as a staff member to view this.</h3>
+    {% endif %}
+</main>
 {% endblock %}
