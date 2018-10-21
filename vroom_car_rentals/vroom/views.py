@@ -112,7 +112,7 @@ def logout(request):
     return redirect('vroom:index') # Redriect the user to the home page
 
 def stores(request):
-    stores = store.objects.values('name', 'address', 'phone')
+    stores = Store.objects.values('name', 'address', 'phone')
     context = {'stores': stores}
     return render(request, 'vroom/stores.html', context)
 
