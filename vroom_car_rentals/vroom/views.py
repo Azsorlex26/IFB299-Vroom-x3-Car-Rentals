@@ -9,7 +9,6 @@ def index(request):
 
 def cars(request):
     cars = get_all_cars() # Retrieve all the cars and the relevant information (from functions.py)
-<<<<<<< HEAD
     stores = store.objects.values('name') # Retrieves the names of the stores
     make_name = car.objects.values('make_name').order_by('make_name').distinct() # Retrieves all makes of cars from the database
     seriesYear = car.objects.values('seriesYear').order_by('seriesYear').distinct() # Retrieves the years stored in the database
@@ -17,15 +16,6 @@ def cars(request):
     body_type = car.objects.values('body_type').order_by('body_type').distinct() # Retrieves the different types of cars stored in the database
     seating_capacity = car.objects.values('seating_capacity').order_by('seating_capacity').distinct() # Retrieves the seating_capacity stored in the database	
     drive = car.objects.values('drive').order_by('drive').distinct() # Retrieves the drive types stored in the database
-=======
-    stores = Store.objects.values('name') # Retrieves the names of the stores
-    make_name = Car.objects.values('make_name').order_by('make_name').distinct() # Retrieves all makes of cars from the database
-    seriesYear = Car.objects.values('seriesYear').order_by('seriesYear').distinct() # Retrieves the years stored in the database
-    fuel_system = Car.objects.values('fuel_system').order_by('fuel_system').distinct() # Retrieves the fuel systems stored in the database
-    body_type = Car.objects.values('body_type').order_by('body_type').distinct() # Retrieves the different types of cars stored in the database
-    seating_capacity = Car.objects.values('seating_capacity').order_by('seating_capacity').distinct() # Retrieves the seating_capacity stored in the database
-    drive = Car.objects.values('drive').order_by('drive').distinct() # Retrieves the drive types stored in the database
->>>>>>> 3e7fc65a8c8eff5c4fb100a59e49e9189d5c764b
     filter = '' # Declare a string that'll be used for getting results by name
     context = {'list_of_cars': cars, 'filter': filter, 'stores': stores, 'make_name': make_name, 'seriesYear': seriesYear, 'fuel_system': fuel_system, 'body_type': body_type, 'seating_capacity': seating_capacity, 'drive': drive} # Create a context dictionary that contains the retrieved cars and information used in filters
 
@@ -133,11 +123,11 @@ def storehistory(request):
         context = {'list_of_stores': stores, 'table_data': {'Orders': orders}}
 
         #selected_customer_id = 1101 
-        selected_customer_id = get_all_customers()
-        customer_orders = get_all_customers().filter(user_id=selected_customer_id)
-        customer_order_table_name = 'Customer Orders:'
+        #selected_customer_id = get_all_customers()
+       # customer_orders = get_all_customers().filter(user_id=selected_customer_id)
+       # customer_order_table_name = 'Customer Orders:'
 
-        context['customer_orders'] = customer_orders
+       # context['customer_orders'] = customer_orders
 
         if 'store' in request.GET and not 'clear' in request.GET:
             selected_store_id = int(request.GET.get('store')) # Retrieve the selected store id from the html form
