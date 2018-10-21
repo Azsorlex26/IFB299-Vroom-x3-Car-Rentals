@@ -125,11 +125,11 @@ def storehistory(request):
         context = {'list_of_stores': stores, 'table_data': {'Orders': orders}}
 
         #selected_customer_id = 1101
-        selected_customer_id = get_all_customers()
-        customer_orders = get_all_customers().filter(user_id=selected_customer_id)
-        customer_order_table_name = 'Customer Orders:'
+        #selected_customer_id = get_all_customers()
+        #customer_orders = get_all_customers().filter(user_id=selected_customer_id)
+        #customer_order_table_name = 'Customer Orders:'
 
-        context['customer_orders'] = customer_orders
+        #context['customer_orders'] = customer_orders
 
         if 'store' in request.GET and not 'clear' in request.GET:
             selected_store_id = int(request.GET.get('store')) # Retrieve the selected store id from the html form
