@@ -119,18 +119,17 @@ def storehistory(request):
     stores = get_all_stores() # Retrieve all the store information (from functions.py)
     try: # A failure occurs when no one is logged in (accessing via search bar)
         if request.session['access'] == "CUSTOMER": # This is the line that fails
-            orders = orders.filter(customer_user_id=request.session['id'])
+            orders = orders.filter(customer_id=request.session['id'])
 
             
         context = {'list_of_stores': stores, 'table_data': {'Orders': orders}}
         
-        context = {'customer_orders' : orders, 'orders_table_data': {'Orders': orders}}
+        context = {'list_of_orders' : orders, 'table_data': {'Orders': orders}}
                 
 
-            orders = orders.filter(customer_user_id=request.session['id'])
-        context = {'list_of_stores': stores, 'table_data': {'Orders': orders}}
-
-             if 'store' in request.GET and not 'clear' in request.GET:
+        orders = orders.filter(customer_id=request.session['id'])
+        context = {'list_of_stores': stores, 'table_data': {'Orders': orders}} 
+        if 'store' in request.GET and not 'clear' in request.GET:
             selected_store_id = int(request.GET.get('store')) # Retrieve the selected store id from the html form
             pickup_stores = orders.filter(pickup_store=selected_store_id)
             return_stores = orders.filter(return_store=selected_store_id)
