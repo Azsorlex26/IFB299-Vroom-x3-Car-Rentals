@@ -110,7 +110,7 @@ def logout(request):
     return redirect('vroom:index') # Redriect the user to the home page
 
 def stores(request):
-    stores = store.objects.values('name', 'address', 'phone')
+    stores = Store.objects.values('name', 'address', 'phone')
     context = {'stores': stores}
     return render(request, 'vroom/stores.html', context)
 
@@ -126,6 +126,16 @@ def storehistory(request):
         
         context = {'customer_orders' : orders, 'orders_table_data': {'Orders': orders}}
                 
+
+            orders = orders.filter(customer__user_id=request.session['id'])
+        context = {'list_of_stores': stores, 'table_data': {'Orders': orders}}
+
+        #selected_customer_id = 1101
+        #selected_customer_id = get_all_customers()
+        #customer_orders = get_all_customers().filter(user_id=selected_customer_id)
+        #customer_order_table_name = 'Customer Orders:'
+
+        #context['customer_orders'] = customer_orders
 
         if 'store' in request.GET and not 'clear' in request.GET:
             selected_store_id = int(request.GET.get('store')) # Retrieve the selected store id from the html form
