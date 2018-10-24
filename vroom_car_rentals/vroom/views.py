@@ -118,36 +118,36 @@ def storehistory(request):
     orders = get_all_orders() # Retrive all the order information (from functions.py)
     stores = get_all_stores() # Retrieve all the store information (from functions.py)
     try: # A failure occurs when no one is logged in (accessing via search bar)
-        if request.session['access'] == "CUSTOMER": # This is the line that fails 
-            orders = orders.filter(customer_id=request.session['id'])
-   
-        context = {'list_of_stores': stores, 'table_data': {'Orders': orders}}
-        context = {'list_of_orders' : orders, 'table_data': {'Orders': orders}}
+        if request.session['access'] == "CUSTOMER": # This is the line that fails
+            orders = orders.filter(customer__user_id=request.session['id'])
+        else:
+            users = get_all_customers().filter(role=1).order_by('name')
+        context = {'list_of_stores': stores, 'list_of_users': users, 'table_data': {'Orders': orders}}
 
-        orders = orders.filter(customer_id=request.session['id'])
-        context = {'list_of_stores': stores, 'table_data': {'Orders': orders}} 
-        if 'store' in request.GET and not 'clear' in request.GET:
-            selected_store_id = int(request.GET.get('store')) # Retrieve the selected store id from the html form
-            pickup_stores = orders.filter(pickup_store=selected_store_id)
-            return_stores = orders.filter(return_store=selected_store_id)
-            selected_store_name = stores.get(store_id=selected_store_id).name # Retrieve the name that belongs to the ID
-            pickup_order_table_name = 'Pickup Orders:'
-            return_order_table_name = 'Return Orders:'
+        if not 'clear' in request.GET:
+            if 'user' in request.GET:
+                orders = orders.filter(customer__name=request.GET.get('user'))
+                context['table_data'] = {'Orders': orders}
+                context['selected_user_name'] = request.GET.get('user')
 
-            if len(pickup_stores) == 0: # If there aren't any values in pickup_stores and/or return_stores, set the respective title to have 'No' at the begining
-                pickup_order_table_name = 'No Pickup Orders'
-            if len(return_stores) == 0:
-                return_order_table_name = 'No Return Orders'
+            if 'store' in request.GET:
+                selected_store_id = int(request.GET.get('store')) # Retrieve the selected store id from the html form
+                pickup_stores = orders.filter(pickup_store=selected_store_id)
+                return_stores = orders.filter(return_store=selected_store_id)
+                selected_store_name = stores.get(store_id=selected_store_id).name # Retrieve the name that belongs to the ID
+                pickup_order_table_name = 'Pickup Orders:'
+                return_order_table_name = 'Return Orders:'
 
-            context = {
-                'customer_orders': orders,
-                'list_of_stores': stores,
-                'table_data': {pickup_order_table_name: pickup_stores, return_order_table_name: return_stores}, # Used for simplifying the code in storehistory.html
-                'selected_store_name': selected_store_name,
-                'selected_store_id': selected_store_id
-            }
-     
-    except KeyError: #Prevent a user that isn't logged in from viewing anything upon failure
+                if len(pickup_stores) == 0: # If there aren't any values in pickup_stores and/or return_stores, set the respective title to have 'No' at the begining
+                    pickup_order_table_name = 'No Pickup Orders'
+                if len(return_stores) == 0:
+                    return_order_table_name = 'No Return Orders'
+
+                context['table_data'] = {pickup_order_table_name: pickup_stores, return_order_table_name: return_stores} # Used for simplifying the code in storehistory.html
+                context['selected_store_name'] = selected_store_name
+                context['selected_store_id'] = selected_store_id
+
+    except KeyError: # Prevent a user that isn't logged in from viewing anything upon failure
         context = {'list_of_stores': stores, 'table_data': {"You don't have permission to view this page.": None}}
 
     return render(request, 'vroom/storehistory.html', context) # Render the store history page with context
