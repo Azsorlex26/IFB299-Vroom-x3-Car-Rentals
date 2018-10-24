@@ -196,3 +196,35 @@ def generate_report(year, month):
 
     return {'profit_history': month_money, 'profit': profit, 'sign': sign, 'store_car_info': store_car_info, 'active_customers': active_customers,
             'pickup_store': store_activity['pickup'], 'return_store': store_activity['return'], 'total_store': store_activity['total']}
+
+def get_most_active_stores():
+
+    # Get all the stores and have room for the pickup, return and total counters
+    stores = get_all_stores().values('store_id', 'name').annotate(pickup_activity=Count('store_id'), return_activity=Count('store_id'), total_activity=Count('store_id')) # Get a queryset of all stores
+
+    # Get a queryset of each stores (pickup counts and returns)
+    pickup_store_activity = get_all_orders().select_related().values('pickup_store_id', 'pickup_store_id__name').annotate(activity=Count('pickup_store_id'))
+    return_store_activity = get_all_orders().select_related().values('return_store_id', 'return_store_id__name').annotate(activity=Count('return_store_id'))
+
+    for store in stores: # For each store
+        # If the current store is in the pickup_store_activity
+        if (pickup_store_activity.filter(pickup_store_id=store['store_id']).count() != 0):
+            # Update the pickup number for the current store
+            store['pickup_activity'] = pickup_store_activity.filter(pickup_store_id=store['store_id'])[0]['activity']
+        else:
+            # Else, initialise it to zero
+            store['pickup_activity'] = 0
+        # If the current store is in the return_store_activity
+        if (return_store_activity.filter(return_store_id=store['store_id']).count() != 0):
+            # Update the return number for the current store
+            store['return_activity'] = return_store_activity.filter(return_store_id=store['store_id'])[0]['activity']
+        else:
+            # Else, initialise it to zero
+            store['return_activity'] = 0
+
+        # Sum the pickup and return to get the total
+        store['total_activity'] = store['pickup_activity'] + store['return_activity']
+
+    total_store_activity = sorted(stores, key=lambda store: store['total_activity'], reverse=True)[:10]
+
+    return total_store_activity
