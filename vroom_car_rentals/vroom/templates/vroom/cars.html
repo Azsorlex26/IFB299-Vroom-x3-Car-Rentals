@@ -4,18 +4,13 @@
 {% load static %}
 
 <script>
-	function update(element){
-		var minPrice = document.getElementById('price-min').value;
+    function update(element){
+        var minPrice = document.getElementById('price-min').value;
 		var maxPrice = document.getElementById('price-max').value;
-		
-		if (element == 'price-min'){
-			document.getElementById('minSpan').innerHTML="$"+ minPrice;
-			document.getElementById('price-min').max=maxPrice;
-		}
-		else if (element == 'price-max'){
-			document.getElementById('maxSpan').innerHTML="$"+ maxPrice;
-			document.getElementById('price-max').min=minPrice;
-		}
+		document.getElementById('minSpan').innerHTML = "$" + minPrice;
+        document.getElementById('maxSpan').innerHTML = "$" + maxPrice;
+        document.getElementById('price-min').max = maxPrice;
+        document.getElementById('price-max').min = minPrice;
 	}
 	
 	function hide_drop(value){
