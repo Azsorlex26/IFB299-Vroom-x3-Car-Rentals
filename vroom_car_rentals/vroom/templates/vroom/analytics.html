@@ -47,11 +47,12 @@
         <table>
             <tbody>
                 <tr>
-                    <th>View Store Activity</th>
+                    <th>Store Rental Activity</th>
                 </tr>
                 <tr>
-                    <td>Store Activity infographic</td>
-
+                    <td>
+                        <canvas id="store-activity-chart" height="400" width="1000"></canvas>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -211,6 +212,68 @@
         </script>
     </div>
     {% endif %}
+    <script>
+        //Get the canvas for the store activity chart
+        var store_activity_canvas = document.getElementById('store-activity-chart').getContext('2d');
+        //Create a new chart
+        var store_activity_chart = new Chart(store_activity_canvas, {
+            
+            //Specify the type of chart to be displayed
+            type: 'bar',
+
+            data: {
+                labels: [ 
+                    //Loop through store names
+                    {% for store in store_activity_report%}
+                        "{{store.name}}",
+                    {% endfor %}
+                ],
+                datasets: [
+                    {
+                        label: "Pickup",
+                        backgroundColor: "purple",
+                        data: [
+                            //Loop through each stores pickups in order
+                            {% for store in store_activity_report%}
+                                "{{store.pickup_activity}}",
+                            {% endfor %}
+                        ]
+                    },
+                    {
+                        label: "Return",
+                        backgroundColor: "blue",
+                        data: [
+                            //Loop through each stores returns in order
+                            {% for store in store_activity_report%}
+                                "{{store.return_activity}}",
+                            {% endfor %}
+                        ]
+                    },
+                ]
+            },
+
+            // Configuration options go here
+            options: {
+                responsive: false, // Dynamic resize
+                maintainAspectRatio: false, // Same width and height ratio
+                barValueSpacing: 20,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 16
+                        }
+                    }]
+                }
+
+            }
+
+        });
+    </script>
     {% else %}
         <h3 style="text-align: center">Access Denied: You must be logged in as a staff member to view this.</h3>
     {% endif %}

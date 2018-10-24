@@ -157,7 +157,9 @@ def analytics(request):
     min_date = "%d-%02d" % (get_min_order_date()['min_date'].year, get_min_order_date()['min_date'].month)
     max_date = "%d-%02d" % (get_max_order_date()['max_date'].year, get_max_order_date()['max_date'].month)
 
-    context = {'min_date': min_date, 'max_date': max_date}
+    store_activity_report = get_most_active_stores()
+
+    context = {'min_date': min_date, 'max_date': max_date, 'store_activity_report': store_activity_report}
 
     date_expression = re.compile('^[0-9]{4}-[0-9]{2}$') # Regex to check date input
 
