@@ -186,7 +186,7 @@ def generate_report(year, month):
     active_customers = get_active_customers(year, month)
 
     # Calculate the difference in money from the last and second last items
-    profit = month_money[-1]['money'] - month_money[-2]['money']
+    profit = round(month_money[-1]['money'] - month_money[-2]['money'], 4)
 
     # Whether the profit was positive or not
     if (profit >= 0):
