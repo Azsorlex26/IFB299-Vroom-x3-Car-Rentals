@@ -118,14 +118,11 @@ def storehistory(request):
     orders = get_all_orders() # Retrive all the order information (from functions.py)
     stores = get_all_stores() # Retrieve all the store information (from functions.py)
     try: # A failure occurs when no one is logged in (accessing via search bar)
-        if request.session['access'] == "CUSTOMER": # This is the line that fails
+        if request.session['access'] == "CUSTOMER": # This is the line that fails 
             orders = orders.filter(customer_id=request.session['id'])
-
-            
+   
         context = {'list_of_stores': stores, 'table_data': {'Orders': orders}}
-        
         context = {'list_of_orders' : orders, 'table_data': {'Orders': orders}}
-                
 
         orders = orders.filter(customer_id=request.session['id'])
         context = {'list_of_stores': stores, 'table_data': {'Orders': orders}} 
@@ -150,7 +147,7 @@ def storehistory(request):
                 'selected_store_id': selected_store_id
             }
      
-    except KeyError: #Prevent a user that isn't logged in frm viewing anything upon failure
+    except KeyError: #Prevent a user that isn't logged in from viewing anything upon failure
         context = {'list_of_stores': stores, 'table_data': {"You don't have permission to view this page.": None}}
 
     return render(request, 'vroom/storehistory.html', context) # Render the store history page with context
