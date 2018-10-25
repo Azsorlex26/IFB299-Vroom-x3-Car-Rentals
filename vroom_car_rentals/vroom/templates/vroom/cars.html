@@ -42,6 +42,9 @@
                 {% else %}
                 <input type="search" name="search" id="search-text" placeholder="Enter a name" value={{ filter }} />
                 {% endif %}
+                {% if filter_names %}
+                <input type="submit" name="clear" value="Clear Filter"> <!--Clears the store filter-->
+                {% endif %}
                 <input type="submit" id="search-btn" value="Search"/>
             </div>
 			
@@ -160,12 +163,12 @@
                     {% endfor %}
                 </select>
             </div>
-			<div class="rangeslider">
-				<label for="price-min">Min:</label>
-				<input type="range" name="price-min" id="price-min" value="0" min="0" step= '1000' max='250000' oninput="update('price-min');"><span id="minSpan">$0</span>
-				<label for="price-max">Max:</label>
-				<input type="range" name="price-max" id="price-max" value="250000" min="0" max="250000" step= '1000' oninput="update('price-max');"><span id="maxSpan">$250000</span>
-			</div>
+            <div class="rangeslider">
+                <label for="price-min">Min:</label>
+                <input type="range" name="price-min" id="price-min" value="0" min="0" step= '1000' max='250000' oninput="update('price-min');"><span id="minSpan">$0</span>
+                <label for="price-max">Max:</label>
+                <input type="range" name="price-max" id="price-max" value="250000" min="0" max="250000" step= '1000' oninput="update('price-max');"><span id="maxSpan">$250000</span>
+            </div>
         </form>
     </section>
     <!--Second section which contains the less important information but is still useful-->
