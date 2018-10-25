@@ -9,7 +9,7 @@
         <img src="{% static 'vroom/images/logo-white.png' %}" alt="" />
         <h2>History of a Store</h2><br>
         <div id="filters">
-            <h4>Select a Store to View</h4>
+            <h4>Select a Store or Customer to View</h4>
             <form id="store-history-form" name="searchForm" method="GET" action="{% url 'vroom:storehistory' %}">
                 <select name="store">
                     <option selected disabled>Select Store:</option> <!-- Display all the stores in a drop down box -->
