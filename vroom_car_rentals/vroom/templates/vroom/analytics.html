@@ -34,7 +34,7 @@
 
                 </tr>
             </tbody>
-        </table>
+        </table align="center">
         <table>
             <tbody>
                 <tr>
@@ -226,8 +226,8 @@
                 ],
                 datasets: [
                     {
-                        label: "Orders",
-                        backgroundColor: "blue",
+                        label: "# of Orders",
+                        backgroundColor: "rgb(99,116,205)",
                         data: [
                             {% for car in most_used_car_report%} // Set the data displayed to be total orders for each car of most used cars
                                 "{{car.tcount}}",
@@ -241,7 +241,7 @@
                 maintainAspectRatio: false,
                 barValueSpacing: 20,
                 legend: {
-                    display: false
+                    display: true
                 },
 				scales: {
                     yAxes: [{
@@ -276,9 +276,7 @@
                 ],
                 datasets: [{
                     label: "# of Cars Rented", // Title of plot
-                    backgroundColor: 'rgba(55, 74, 173, 0.4)',
-                    borderColor: 'rgb(30, 200,  150)',
-					
+                    backgroundColor: "rgb(99,116,205)",
                     // Y values
                     data: [
 						{% for amount in orders %}
@@ -334,7 +332,7 @@
                 datasets: [
                     {
                         label: "Pickup",
-                        backgroundColor: "purple",
+                        backgroundColor: "rgb(99,116,205)",
                         data: [
                             //Loop through each stores pickups in order
                             {% for store in store_activity_report%}
@@ -344,7 +342,7 @@
                     },
                     {
                         label: "Return",
-                        backgroundColor: "blue",
+                        backgroundColor: "rgb(55, 74, 173)",
                         data: [
                             //Loop through each stores returns in order
                             {% for store in store_activity_report%}
