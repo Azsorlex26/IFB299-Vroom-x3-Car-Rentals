@@ -215,8 +215,8 @@ def get_most_used_cars():
     #Order by count(order_id) desc
 
     total_orders = get_all_orders().select_related().values('car_id', 'car_id__make_name','car_id__series').annotate(tcount=Count('car_id'))
-    total_orders_sorted = sorted(tots, key=lambda tots: tots['tcount'], reverse=True)[:20]
-    return total_orders
+    total_orders_sorted = sorted(total_orders, key=lambda total_orders: total_orders['tcount'], reverse=True)[:10]
+    return total_orders_sorted
 	
 def get_most_active_stores():
 
