@@ -28,7 +28,9 @@
                     <th>Most Used Cars</th>
                 </tr>
                 <tr>
-                    <td>Most Used Cars infographic</td>
+                    <td>
+						<canvas id="mostusedcars-infographic" height="400" width="1000"></canvas>
+					</td>
 
                 </tr>
             </tbody>
@@ -212,6 +214,54 @@
         </script>
     </div>
     {% endif %}
+	<script> // Section for most used cars chart
+        var mostusedcars_canvas = document.getElementById('mostusedcars-infographic').getContext('2d'); // Set canvas
+        var store_activity_chart = new Chart(mostusedcars_canvas, { // Create bar chart
+            type: 'bar',
+            data: {
+                labels: [ 
+                    {% for car in most_used_car_report%} // Assign most used car series to labels
+                        "{{car.car_id__make_name}}"+" "+"{{car.car_id__series}}",
+                    {% endfor %}
+                ],
+                datasets: [
+                    {
+                        label: "Orders",
+                        backgroundColor: "blue",
+                        data: [
+                            {% for car in most_used_car_report%} // Set the data displayed to be total orders for each car of most used cars
+                                "{{car.tcount}}",
+                            {% endfor %}
+                        ]
+                    }
+                ]
+            },
+            options: { // Set chart options/style
+                responsive: true,
+                maintainAspectRatio: false,
+                barValueSpacing: 20,
+                legend: {
+                    display: false
+                },
+				scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 16
+                        }
+                    }]
+                },
+                title: {
+                    display: false,
+                    text: 'Top Ten Most Ordered Cars'
+                }
+            }
+        });
+    </script>
     <script>
         //Get the canvas for the store activity chart
         var store_activity_canvas = document.getElementById('store-activity-chart').getContext('2d');

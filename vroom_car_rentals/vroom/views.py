@@ -157,9 +157,10 @@ def analytics(request):
     min_date = "%d-%02d" % (get_min_order_date()['min_date'].year, get_min_order_date()['min_date'].month)
     max_date = "%d-%02d" % (get_max_order_date()['max_date'].year, get_max_order_date()['max_date'].month)
 
+    most_used_car_report = get_most_used_cars()
     store_activity_report = get_most_active_stores()
 
-    context = {'min_date': min_date, 'max_date': max_date, 'store_activity_report': store_activity_report}
+    context = {'min_date': min_date, 'max_date': max_date, 'store_activity_report': store_activity_report, 'most_used_car_report': most_used_car_report}
 
     date_expression = re.compile('^[0-9]{4}-[0-9]{2}$') # Regex to check date input
 
@@ -172,6 +173,5 @@ def analytics(request):
         context['report'] = report
         context['selected_date'] = date
         context['selected_date_text'] = calendar.month_name[int(date[-2:])] + ', ' + date[:4] # String version of month (e.g July, 2005)
-
 
     return render(request, 'vroom/analytics.html', context)

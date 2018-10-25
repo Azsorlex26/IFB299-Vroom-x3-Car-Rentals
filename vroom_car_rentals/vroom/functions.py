@@ -16,6 +16,15 @@ def get_all_cars():
 
     return cars
 
+	
+def get_list_cars():
+    # Retrieves all information about orders
+
+    cars = Car.objects.all()
+
+    return cars
+	
+	
 def get_all_orders():
     # Retrieves all information about orders
 
@@ -197,6 +206,18 @@ def generate_report(year, month):
     return {'profit_history': month_money, 'profit': profit, 'sign': sign, 'store_car_info': store_car_info, 'active_customers': active_customers,
             'pickup_store': store_activity['pickup'], 'return_store': store_activity['return'], 'total_store': store_activity['total']}
 
+def get_most_used_cars():
+    #SQL QUERY EQUIVALENT
+    #Select count(order_id), vroom_car.car_id, make_name
+    #From vroom_order, vroom_car
+    #where vroom_order.car_id = vroom_car.car_id
+    #Group by vroom_car.car_id
+    #Order by count(order_id) desc
+
+    total_orders = get_all_orders().select_related().values('car_id', 'car_id__make_name','car_id__series').annotate(tcount=Count('car_id'))
+    total_orders_sorted = sorted(tots, key=lambda tots: tots['tcount'], reverse=True)[:20]
+    return total_orders
+	
 def get_most_active_stores():
 
     # Get all the stores and have room for the pickup, return and total counters
