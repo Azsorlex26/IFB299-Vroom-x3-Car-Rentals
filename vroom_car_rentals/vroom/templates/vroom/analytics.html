@@ -217,7 +217,7 @@
 	<script> // Section for most used cars chart
         var mostusedcars_canvas = document.getElementById('mostusedcars-infographic').getContext('2d'); // Set canvas
         var store_activity_chart = new Chart(mostusedcars_canvas, { // Create bar chart
-            type: 'bar',
+            type: 'horizontalBar',
             data: {
                 labels: [ 
                     {% for car in most_used_car_report%} // Assign most used car series to labels
@@ -237,7 +237,7 @@
                 ]
             },
             options: { // Set chart options/style
-                responsive: true,
+                responsive: false,
                 maintainAspectRatio: false,
                 barValueSpacing: 20,
                 legend: {
@@ -251,6 +251,7 @@
                     }],
                     xAxes: [{
                         ticks: {
+							min: 0,
                             fontSize: 16
                         }
                     }]
