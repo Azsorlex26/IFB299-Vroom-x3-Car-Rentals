@@ -41,7 +41,7 @@
                     <th>Most Active Customers</th>
                 </tr>
                 <tr>
-                    <td>Most Active Customers infographic</td>
+                    <td><canvas id="customers-chart" height="400" width="1000"></canvas></td>
 
                 </tr>
             </tbody>
@@ -263,6 +263,58 @@
             }
         });
     </script>
+	<script>
+	var customer_canvas = document.getElementById('customers-chart').getContext('2d');
+			var customerBar=new Chart(customer_canvas, {
+            type: 'horizontalBar',
+            data: {
+                // X values
+                labels: [
+                    {% for cust in orders %}
+                       " {{cust.customer__name}}",
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: "# of Cars Rented", // Title of plot
+                    backgroundColor: 'rgba(55, 74, 173, 0.4)',
+                    borderColor: 'rgb(30, 200,  150)',
+					
+                    // Y values
+                    data: [
+						{% for amount in orders %}
+							" {{amount.activity}}",
+						{% endfor %}
+						
+                    ],
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+				
+                responsive: false, // Dynamic resize
+                maintainAspectRatio: false, // Same width and height ratio
+				dataset:{
+					xAxisID:'Rentals Made',
+					yAxisID:'Customer Name',
+				},
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontSize: 20
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+							beginAtZero: true,
+                            fontSize: 20
+                        }
+                    }]
+                }
+
+            }
+        });
+	</script>
     <script>
         //Get the canvas for the store activity chart
         var store_activity_canvas = document.getElementById('store-activity-chart').getContext('2d');

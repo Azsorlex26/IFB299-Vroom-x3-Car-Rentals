@@ -23,6 +23,7 @@ def cars(request):
         filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the cars retrieved
         context['filter'] = filter # Update the context
         filter_names = list() # Create a list to store the currently selected filter values
+        cars = cars.filter(car__price_new__range=(request.GET.get('price-min'), request.GET.get('price-max')))	
 
         if 'sort' in request.GET: # Sort the Results by Tank Capacity and determine sort input
             if request.GET.get('sort') == "Car_TankCapacity":
@@ -161,11 +162,12 @@ def analytics(request):
 
     most_used_car_report = get_most_used_cars()
     store_activity_report = get_most_active_stores()
+    orders=get_all_customernumber()
 
-    context = {'min_date': min_date, 'max_date': max_date, 'store_activity_report': store_activity_report, 'most_used_car_report': most_used_car_report}
+    context = {'min_date': min_date, 'max_date': max_date, 'store_activity_report': store_activity_report, 'most_used_car_report': most_used_car_report, 'orders': orders}
 
     date_expression = re.compile('^[0-9]{4}-[0-9]{2}$') # Regex to check date input
-
+	
     if 'report' in request.GET and date_expression.match(request.GET.get('report')): # Ensure get request exists and is correct date format
         date = request.GET.get('report') # Get requested month
 

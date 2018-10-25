@@ -15,7 +15,13 @@ def get_all_cars():
     cars = cars.extra(where={recent_order_per_car})
 
     return cars
-
+	
+def get_all_customernumber():
+	# Retrieves #orders made by a customer
+	from django.db.models import Count
+	order_amount=Order.objects.all().select_related().values('customer', 'customer__name').annotate(activity=Count('customer')).order_by('-activity')[:10]
+	#customers=User.objects.filter().values('name')[:10]
+	return order_amount
 	
 def get_list_cars():
     # Retrieves all information about orders
