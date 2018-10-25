@@ -118,11 +118,13 @@ def storehistory(request):
     orders = get_all_orders() # Retrive all the order information (from functions.py)
     stores = get_all_stores() # Retrieve all the store information (from functions.py)
     try: # A failure occurs when no one is logged in (accessing via search bar)
+        context = {'list_of_stores': stores}
         if request.session['access'] == "CUSTOMER": # This is the line that fails
             orders = orders.filter(customer__user_id=request.session['id'])
         else:
             users = get_all_customers().filter(role=1).order_by('name')
-        context = {'list_of_stores': stores, 'list_of_users': users, 'table_data': {'Orders': orders}}
+            context['list_of_users'] = users
+        context['table_data'] = {'Orders': orders}
 
         if not 'clear' in request.GET:
             if 'user' in request.GET:
