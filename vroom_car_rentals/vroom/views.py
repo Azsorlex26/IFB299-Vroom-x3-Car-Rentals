@@ -19,7 +19,7 @@ def cars(request):
     filter = '' # Declare a string that'll be used for getting results by name
     context = {'list_of_cars': cars, 'filter': filter, 'stores': stores, 'make_name': make_name, 'seriesYear': seriesYear, 'fuel_system': fuel_system, 'body_type': body_type, 'seating_capacity': seating_capacity, 'drive': drive} # Create a context dictionary that contains the retrieved cars and information used in filters
 
-    if 'search' in request.GET: # The user has entered the cars page via the home site search or the cars page search bar
+    if 'search' in request.GET and not 'clear' in request.GET: # The user has entered the cars page via the home site search or the cars page search bar
         filter = '%s' % request.GET.get('search') # Prepare a filter to apply to the cars retrieved
         context['filter'] = filter # Update the context
         filter_names = list() # Create a list to store the currently selected filter values

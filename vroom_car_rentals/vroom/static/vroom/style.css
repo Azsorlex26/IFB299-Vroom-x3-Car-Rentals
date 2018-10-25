@@ -332,6 +332,14 @@ footer p {
     background-color: var(--blue);
 }
 
+#main-search input[name=clear]  {
+    min-width: 125px;
+}
+
+select {
+    outline-color: var(--purple);
+}
+
 #sortBy {
     padding-left: 125px;
     cursor: default;
