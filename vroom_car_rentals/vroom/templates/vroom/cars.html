@@ -165,9 +165,15 @@
             </div>
             <div class="rangeslider">
                 <label for="price-min">Min:</label>
+                {% if price_min %}
+                <input type="range" name="price-min" id="price-min" value="{{ price_min }}" min="0" step= '1000' max='250000' oninput="update('price-min');"><span id="minSpan">${{ price_min }}</span>
+                <label for="price-max">Max:</label>
+                <input type="range" name="price-max" id="price-max" value="{{ price_max }}" min="0" max="250000" step= '1000' oninput="update('price-max');"><span id="maxSpan">${{ price_max }}</span>
+                {% else %}
                 <input type="range" name="price-min" id="price-min" value="0" min="0" step= '1000' max='250000' oninput="update('price-min');"><span id="minSpan">$0</span>
                 <label for="price-max">Max:</label>
                 <input type="range" name="price-max" id="price-max" value="250000" min="0" max="250000" step= '1000' oninput="update('price-max');"><span id="maxSpan">$250000</span>
+                {% endif %}
             </div>
         </form>
     </section>
